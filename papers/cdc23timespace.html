@@ -1,0 +1,34 @@
+---
+layout: page
+title: ! 'Secure State Estimation with Asynchronous Measurements against Malicious Measurement-data and Time-stamp Manipulation'
+comments: true
+---
+<hr />
+<p>
+<b>Zishuo Li, Anh Tung Nguyen, André Teixeira, Yilin Mo, Karl H. Johansson</b>
+</p>
+
+<p>
+<i>2023 IEEE 62th Conference on Decision and Control (CDC)</i>, <a href="https://arxiv.org/abs/2303.17514">Avaiable Online.</a>
+</p> 
+
+<!-- <p>
+doi: 10.1109/CDC45484.2021.9682830.
+</p>
+
+<p>
+Link to the <a href="../../../public/papers/cdc21_arxiv.pdf">paper pdf</a>
+</p>
+
+<p>
+If you want to leave any comments, you can annotate the <a href="../../../pdfviewer/viewer/web/viewer.html?file=%2Fpublic%2Fpapers%2Fcdc21_arxiv.pdf">pdf</a>. I will try to be responsive. You can also annotate this page or leave comments below.
+</p> -->
+
+<div id="outline-container-orgeb2596f" class="outline-2">
+<h2 id="orgeb2596f">Abstract</h2>
+<div class="outline-text-2" id="text-orgeb2596f">
+<p>
+    This paper proposes a secure state estimation scheme with non-periodic asynchronous measurements for linear continuous-time systems under false data attacks on the measurement transmit channel. After sampling the output of the system, a sensor transmits the measurement information in a triple composed of sensor index, time-stamp, and measurement value to the fusion center via vulnerable communication channels. The malicious attacker can corrupt a subset of the sensors through (i) manipulating the time-stamp and measurement value; (ii) blocking transmitted measurement triples; or (iii) injecting fake measurement triples. To deal with such attacks, we propose the design of local estimators based on observability space decomposition, where each local estimator updates the local state and sends it to the fusion center after sampling a measurement. Whenever there is a local update, the fusion center combines all the local states and generates a secure state estimate by adopting the median operator. We prove that local estimators of benign sensors are unbiased with stable covariance. Moreover, the fused central estimation error has bounded expectation and covariance against at most p corrupted sensors as long as the system is 2p-sparse observable. The efficacy of the proposed scheme is demonstrated through an application on a benchmark example of the IEEE 14-bus system.
+</p>
+</div>
+</div>

@@ -1,0 +1,34 @@
+---
+layout: page
+title: ! 'Linear Model Predictive Control under Continuous Path Constraints via Parallelized Primal-Dual Hybrid Gradient Algorithm'
+comments: true
+---
+<hr />
+<p>
+<b>Zishuo Li, Bo Yang, Jiayun Li, Jiaqi Yan, Yilin Mo</b>
+</p>
+
+<p>
+<i>2023 IEEE 62th Conference on Decision and Control (CDC)</i>, <a href="https://arxiv.org/abs/2303.17889">Avaiable Online.</a>
+</p> 
+
+<!-- <p>
+doi: 10.1109/CDC45484.2021.9682830.
+</p>
+
+<p>
+Link to the <a href="../../../public/papers/cdc21_arxiv.pdf">paper pdf</a>
+</p>
+
+<p>
+If you want to leave any comments, you can annotate the <a href="../../../pdfviewer/viewer/web/viewer.html?file=%2Fpublic%2Fpapers%2Fcdc21_arxiv.pdf">pdf</a>. I will try to be responsive. You can also annotate this page or leave comments below.
+</p> -->
+
+<div id="outline-container-orgeb2596f" class="outline-2">
+<h2 id="orgeb2596f">Abstract</h2>
+<div class="outline-text-2" id="text-orgeb2596f">
+<p>
+    In this paper, we consider a  Model Predictive Control (MPC) problem of a continuous-time linear time-invariant system subject to continuous-time path constraints on the states and the inputs. By leveraging the concept of differential flatness, we can replace the differential equations governing the system with linear mapping between the states, inputs and the flat outputs (and their derivatives). The flat outputs are then parameterized by piecewise polynomials, and the model predictive control problem can be equivalently transformed into a Semi-Definite Programming (SDP) problem via Sum-of-Squares (SOS), ensuring constraint satisfaction at every continuous-time interval. We further note that the SDP problem contains a large number of small-size semi-definite matrices as optimization variables. To address this, we develop a Primal-Dual Hybrid Gradient (PDHG) algorithm that can be efficiently parallelized to speed up the optimization procedure. Simulation results on a quadruple-tank process demonstrate that our formulation can guarantee strict constraint satisfaction, while the standard MPC controller based on discretized system may violate the constraint inside a sampling period.
+</p>
+</div>
+</div>
