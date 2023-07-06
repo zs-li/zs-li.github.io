@@ -293,7 +293,7 @@
 
 
 
-<section id="slide-preliminary-result1" class="center">
+<!-- <section id="slide-preliminary-result1" class="center">
 	<h4 id="h4_kf" style="margin-top: -2%;">Methods in the literature</h4>
 	<p style="font-size:35px;">
 	1. Sliding window methods 
@@ -369,7 +369,7 @@
 
 	<p style="font-size:20px;">L. An and G. -H. Yang, "Secure State Estimation Against Sparse Sensor Attacks With Adaptive Switching Mechanism," in IEEE Transactions on Automatic Control, vol. 63, no. 8, pp. 2596-2603, Aug. 2018, doi: 10.1109/TAC.2017.2766759.</p>
 
-</section>
+</section> -->
 
 <!-- <section id="slide-preliminary-result5" class="center">
 	<h4 id="h4_kf">The computational complexity problem of existing works</h4>
@@ -543,6 +543,8 @@
 			\begin{equation}\label{eq:def_Ec}
 				\mathcal{Q}_i\triangleq \{j=1,\cdots,n\ |\ O_i \mathbf{e}_j\neq \mathbf{0} \}.
 			\end{equation}
+			Moreover, $\tilde{A_i}\triangleq H_i A H'_i ,\ \tilde{C_i}\triangleq C_i H'_i, \text{ and } (\tilde{A_i},\tilde{C_i}) \text{ is observable} $.
+	
 </section>
 <!-- <section>
 	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
@@ -564,7 +566,7 @@ $$
 </section> -->
 
 
-<section style="font-size: 24pt;">
+<!-- <section style="font-size: 24pt;">
 	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
 	
 		$$A=\begin{bmatrix}
@@ -598,35 +600,52 @@ $$
 	<h4 id="" >$H_i$ is designed such that </h4>
 	\begin{align}
 		\tilde{A_i}\triangleq H_i A H'_i ,\quad \tilde{C_i}\triangleq C_i H'_i, \text{ and } (\tilde{A_i},\tilde{C_i}) \text{ is observable} 
-	\end{align} 
+	\end{align}  -->
 	
 	<!-- $H_i$ transforms state $x$ into observable part at sensor $i$.
 
 	$$H_1[x_1,x_2,x_3]=x_1,\ H_2[x_1,x_2,x_3]=[x_2,x_3], \cdots$$ -->
 	<!-- $H_1$ transforms state $[x_1,x_2,x_3]$ into state $x_1$. $H_2$ transforms state $[x_1,x_2,x_3]$ into state $[x_2,x_3]$. -->
 
-</section>
+<!-- </section> -->
 
-<section style="font-size: 24pt;">
-	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
-	
+<section style="font-size: 20pt;">
+	<h4 id="">Example on Resilient Fusion</h4>
+	<div class="leftcol" style="margin-left: -1%;margin-right: 0%">
+		$$A=\begin{bmatrix}
+			\lambda_1 &0&0\\
+			0& \lambda_2 & 1\\
+			0&0&\lambda_2
+		\end{bmatrix}, \quad 
+		C=\begin{bmatrix}
+			1 &0&0\\
+			0&1&0\\
+			1 &0&0\\
+			0&1&1\\
+			1 &0&0\\
+			0&0&1
+		\end{bmatrix}.$$
 		
-		
-	$$\tilde{A}_1=\lambda_1,\; \tilde{C}_1=1,\quad \tilde{A}_2=\begin{bmatrix}
+	<!-- $$\tilde{A}_1=\lambda_1,\; \tilde{C}_1=1,\quad \tilde{A}_2=\begin{bmatrix}
 		\lambda_2 & 1\\
 		0&\lambda_2
 	\end{bmatrix}, \; \tilde{C}_2=\begin{bmatrix}
 		1 &0
-	\end{bmatrix}, \cdots$$
+	\end{bmatrix}, \cdots$$ -->
+	<div>
+		Construct 6 local observers :
+		$$\eta_1(k+1)=(\tilde{A}_1-L_1 \tilde{C}_1 )\eta_1(k)+L_1 y_1(k).$$
+		$$\vdots$$
+		$$\eta_6(k+1)=(\tilde{A}_6-L_6 \tilde{C}_6 )\eta_6(k)+L_6 y_6(k).$$
+	
+	
+		
+	</div>
+</div>
+	
 
-	Construct two observers that estimates $H_1 x$ and $H_2 x.$
-
-
-	$$\eta_1(k+1)=(\tilde{A}_1-L_1 \tilde{C}_1 )\eta_1(k)+L_1 y_1(k).$$
-	$$\vdots$$
-	$$\eta_6(k+1)=(\tilde{A}_6-L_6 \tilde{C}_6 )\eta_6(k)+L_6 y_6(k).$$
-
-	Fuse those subsystems by taking median:
+<div class="rightcol" style="margin-left: -1%;margin-right: 0%;">
+	
 
 	<!-- $$\hat{x}(k)=f(H_1^\top \eta_1(k), H_2^\top \eta_2(k))$$ -->
 	<!-- $$\begin{bmatrix}x_1 \\ \cdot \\ \cdot \end{bmatrix},
@@ -637,17 +656,45 @@ $$
 	\begin{bmatrix}\cdot \\ \cdot \\ x_3 \end{bmatrix}
 	$$ -->
 	<div class="r-stack">
-		<span class="fragment fade-out" data-fragment-index="1">
-			<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/med_before.png" width="1000" height="200"></div>
+
+
+		<span class="fragment fade-in" data-fragment-index="1">
+			Fuse those subsystems by taking median:
+			<div style="margin-left: -20%; margin-right: -20%;" class="imgcontainer"><img src="./figures/med_before.png" width="1500" height="200"></div>
 		</span>
 
-		<span  class="fragment fade-in" data-fragment-index="1">
-			<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/med.png" width="1100" height="200"></div>
+		<span  class="fragment fade-in" data-fragment-index="2">
+			Fuse those subsystems by taking median:
+			<div style="margin-left: -20%; margin-right: -20%;" class="imgcontainer"><img src="./figures/med.png" width="1100" height="200"></div>
 		</span>
 	</div>
 
-	
 
+</div>
+
+</section>
+
+<section id="inter-result">
+	<h4 id="">Secure Estimation Algorithm against static sparse attack</h4>
+
+	<h4 id="" style="margin-top: 1%">Lemma 1</h4>
+
+	<!-- <div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div> -->
+
+	$$[\hat{x}(k)]_j={\rm med}\left\{[H_i^\top \eta_i(k)]_j, j\in\mathcal{Q}_i\right\}$$
+
+	<div style="font-size:40px; margin-top: 0%;">
+	The state estimation $\hat{x}(k)$ above has uniformly bounded error under <strong>static sparse attack</strong> where ${\rm supp} \{a(k)\}\subset \mathcal{C}$.
+	</div>
+
+	$$
+	\|\hat{x}(k)-x(k)\|_\infty\leq {\rm Constant}(\mathcal{B}_w,\mathcal{B}_v,A,C,L_i) $$
+
+
+	<h4 id="" style="margin-top: 4%">For time-varying attack</h4>
+	<div>
+		Since time-varying attack may deteriorate all local states $\eta_i(k)$, we need a <strong>detection</strong> and <strong>reset</strong> mechanism.
+	</div>
 
 </section>
 
@@ -655,7 +702,7 @@ $$
 <section>
 	<h4 id="">Secure Estimation Algorithm </h4>
 
-	<div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1800"></div>
 
 	<div style="font-size:30px; margin-top: 40%;">
 	Step 1: update local observer state.
@@ -665,7 +712,7 @@ $$
 <section>
 	<h4 id="">Secure Estimation Algorithm</h4>
 
-	<div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
 
 	<div style="font-size:30px; margin-top: 35%;">
 	Step 2: For each state entry,  take median among all local states that can observe them.
@@ -678,13 +725,13 @@ $$
 <section>
 	<h4 id="">Secure Estimation Algorithm</h4>
 
-	<div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
 
 	<div style="font-size:30px; margin-top: 35%;">
-	Step 3: Check compatibility of all those local estimates.
+	Step 3: Check compatibility of all those local estimates. 
 	<!-- $$\mathcal{F}_j\triangleq \{j|O_i \mathbf{e}_j \neq \mathbf{0}\}.$$ -->
 	</div>
-	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/med.png" width="800" height="200"></div>
+	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/med_check.png" width="800" height="200"></div>
 	
 </section>
 
@@ -717,7 +764,7 @@ $$
 	</ul>
 </section> -->
 
-<section id="" class="center">
+<!-- <section id="" class="center">
 	<h4 id="" style="margin-top: 1%">Convergence Proof (Theorem 2)</h4>
 
 	Assume for each sensor $i$, estimator gain $L_i$ and detector parameter $\gamma$ satisfy the following inequality:
@@ -728,19 +775,19 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	where
 	<div style="font-size: 25pt;">
 	$\text{Accurate sensor set: }\mathcal{A}(k)\triangleq \{\ i\in\{ 1,\cdots,m\} \ \left| \ \|\eta_i(k)-H_ix(k)\|_{2}\leq \gamma \right. \} .$
-</div>
+</div> -->
 <!-- <div style="font-size: 25pt;" >
 	$\text{Good sensor set: } \mathcal{G}(k)\triangleq \mathcal{I}\setminus \mathcal{C}(k).$
 </div> -->
-</section>
+<!-- </section> -->
 
 <section id="" class="center">
-	<h4 id="" style="margin-top: 1%">Main result on secure estimation (Theorem 3)</h4>
+	<h4 id="" style="margin-top: 1%">Main result on secure estimation (Theorem 2)</h4>
 
-	Assume the following two  conditions hold:
+	Assume the system is $2p$-sparse observable and the following two conditions hold:
 	<div>
 	(1)
-	$\sigma_{\max}\left(\tilde{A}_i-L_i\tilde{C}_i\right)\leq \frac{\gamma-\mathcal{B}_w- \|L_i\|_2\mathcal{B}_v }{(2\sqrt{n_i}+1)\gamma}$
+	$\sigma_{\max}\left(\tilde{A}_i-L_i\tilde{C}_i\right)\leq \frac{\gamma-\mathcal{B}_w- \|L_i\|_2\mathcal{B}_v }{(2\sqrt{n_i}+1)\gamma}$ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$. 
 </div>
 <div>
 	(2) The initial estimate satisfies $\|\hat{x}(0)-x(0)\|_\infty\leq \gamma$.
@@ -965,12 +1012,35 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 
 </section>
 
+
+<section>
+	<h4>Random signal attack</h4>
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/rand_added_a.png" alt="Figure" style="margin-top:-2%; max-height:150vh" />
+			</p>
+		</div>
+	</div>
+</section>
+
 <section>
 	<h4>Estimation performance under random attack signal</h4> 
 	<div about="" typeof="dcmitype:StillImage" class="figure">
 		<img src="./figures/random_attack_result.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
 	</div>
 		
+</section>
+
+<section>
+	<h4>Slope signal attack</h4>
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/slope_added_a.png" alt="Figure" style="margin-top:-2%; max-height:150vh" />
+			</p>
+		</div>
+	</div>
 </section>
 
 <section>
