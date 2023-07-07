@@ -252,7 +252,7 @@
 			$$
 		</p>
 	</li>
-	<li>process noise $w(k)$ and measurement noise $v(k)$ are bounded: $\|w(k)\|_2\leq\mathcal{B}_w $, $\|v(k)\|_2\leq\mathcal{B}_v $</li> (We can also handle Gaussian noises in other works)
+	<li>process noise $w(k)$ and measurement noise $v(k)$ are bounded: $\|w(k)\|_2\leq\mathcal{B}_w $, $\|v(k)\|_2\leq\mathcal{B}_v $.</li>
 	<li> <strong><em style="color:var(--myred);">$(A,C)$ is observable</em></strong>. Note that <strong><em style="color:var(--myred);">$(A, C_i)$ is not necessarily observable</em></strong>.</li>
 	</ul>
 </section>
@@ -271,9 +271,9 @@
 	</div>
 	<div class="rightcol" style="width:50%;">
 		<div class="fragment fade-in" data-fragment-index="2" >
-			<h4 id="">Sparse Observability/Detectability</h4>
-			System $(A,C)$ is $s$-sparse observable (detectable) if  system $(A,C_{\mathcal{I}\setminus\mathcal{S}})$ is observable
-			(detectable) for any set of sensors $\mathcal{S}$ with cardinality $|\mathcal{S}| = s$.
+			<h4 id="">Sparse Observability</h4>
+			System $(A,C)$ is $s$-sparse observable if  system $(A,C_{\mathcal{I}\setminus\mathcal{S}})$ is observable
+		 for any set of sensors $\mathcal{S}$ with cardinality $|\mathcal{S}| = s$.
 			<li style="font-size:30px;margin-top: 5%;">
 				System is still observable after removing arbitrary $s$ sensors.
 			</li>
@@ -465,10 +465,9 @@
 
 <section>
 	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
-
 	<!-- <div style="margin-bottom: 5%;" class="imgcontainer"><img src="./figures/decompose_obs_space.png" width="800" height="1400"></div> -->
 	<div class="leftcol" style="width:80%;">
-		<div style="margin-bottom: 47%;margin-left: 20%;" class="imgcontainer"><img src="./figures/decompose_obs_space.png" width="1300" height="1300"></div>
+		<div style="margin-bottom: 47%;margin-left: 20%;" class="imgcontainer"><img src="./figures/decompose_obs_space.png" width="1800" height="1300"></div>
 			<div class="r-stack" style="margin-top: 0%;">
 				<span class="fragment fade-in" data-fragment-index="1">
 				<h4 id="" >Our idea: </h4>
@@ -537,7 +536,7 @@
 				H_i = 
 				\begin{bmatrix}
 					\mathbf{e}_{j_1}& \mathbf{e}_{j_2}& \cdots &\mathbf{e}_{j_{n_i}}
-				\end{bmatrix}'
+				\end{bmatrix}^\top
 			\end{align}
 			where $\{j_1,\cdots,j_{n_i}\}=\mathcal{Q}_i$ with
 			\begin{equation}\label{eq:def_Ec}
@@ -684,7 +683,7 @@ $$
 	$$[\hat{x}(k)]_j={\rm med}\left\{[H_i^\top \eta_i(k)]_j, j\in\mathcal{Q}_i\right\}$$
 
 	<div style="font-size:40px; margin-top: 0%;">
-	The state estimation $\hat{x}(k)$ above has uniformly bounded error under <strong>static sparse attack</strong> where ${\rm supp} \{a(k)\}\subset \mathcal{C}$.
+	If the system is $2p$ sparse observable, then $\hat{x}(k)$ above has uniformly bounded error under <strong>static sparse attack</strong> where ${\rm supp} \{a(k)\}\subset \mathcal{C}$.
 	</div>
 
 	$$
@@ -706,6 +705,7 @@ $$
 
 	<div style="font-size:30px; margin-top: 40%;">
 	Step 1: update local observer state.
+	$$\eta_i(k+1)=(\tilde{A}_i - L_i \tilde{C} ) \eta_i^+(k)+L_i y_i(k)$$
 	</div>
 </section>
 
@@ -1018,7 +1018,7 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	<div class="imgcontainer">
 		<div typeof="dcmitype:StillImage" class="figure">
 			<p>
-				<img data-src="figures/rand_added_a.png" alt="Figure" style="margin-top:-2%; max-height:150vh" />
+				<img data-src="figures/rand_added_a.png" alt="Figure" style="margin-top:-2%;margin-bottom:-2%; max-height:70vh" />
 			</p>
 		</div>
 	</div>
@@ -1026,9 +1026,16 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 
 <section>
 	<h4>Estimation performance under random attack signal</h4> 
-	<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/random_attack_result.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/random_attack_result.png" alt="Figure" style="margin-top:-2%; max-height:70vh" />
+			</p>
+		</div>
 	</div>
+	<!-- <div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/random_attack_result.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+	</div> -->
 		
 </section>
 
@@ -1037,7 +1044,7 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	<div class="imgcontainer">
 		<div typeof="dcmitype:StillImage" class="figure">
 			<p>
-				<img data-src="figures/slope_added_a.png" alt="Figure" style="margin-top:-2%; max-height:150vh" />
+				<img data-src="figures/slope_added_a.png" alt="Figure" style="margin-top:-2%; max-height:70vh" />
 			</p>
 		</div>
 	</div>
@@ -1045,9 +1052,16 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 
 <section>
 	<h4>Estimation performance under slope attack signal</h4> 
-	<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/slope_attack_result.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/slope_attack_result.png" alt="Figure" style="margin-top:-2%; max-height:70vh" />
+			</p>
+		</div>
 	</div>
+	<!-- <div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/slope_attack_result.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+	</div> -->
 </section>
 
 
@@ -1071,7 +1085,7 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 <section style="font-size: 35px;">
 	<h4>Summary</h4>
 
-	Propose an algorithm for $p$-sparse attack on time-varying sensor sets.
+	Propose an algorithm for time-varying $p$-sparse attack on sensors.
 	
 	<h5 style="font-size: 40px; margin-top: 1%;">Algorithm structure</h5>
 	<li>Step 1: local observer update</li>
