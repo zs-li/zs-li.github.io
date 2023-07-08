@@ -167,42 +167,6 @@
 
 </section>
 
-<section id="slide-problem-formulation1">
-	<h3>Resilient Estimation</h3>
-	<!-- <div class="r-stack"> -->
-		<!-- <div class="fragment fade-out" data-fragment-index="1" >
-			<div class="imgcontainer">
-				<p>
-					<img data-src="figures/estimation_problem.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
-				</p>
-			</div>
-		</div> -->
-		<!-- <div class="fragment fade-in" data-fragment-index="1" > -->
-			<div class="imgcontainer">
-				<p>
-					<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
-				</p>
-		<!-- </div> -->
-		<!-- </div> -->
-	</div>
-
-</section>
-
-<!-- <section id="slide-content" class="center">
-	<h3 id="content">Table of Contents</h3>
-	<div id="text-table-of-contents">
-	<ul>
-		<li><a href="#slide-problem-formulation">Problem formulation</a></li>
-		<li><a href="#Information Flow of Our Proposed Estimator">Centralized Secure Estimation</a></li>
-		<li><a href="#slide-distribution">Distributed Secure Estimation</a></li>
-		<li><a href="#slide-simu-exp">Simulation and experiment</a></li>
-		<li><a href="#slide-conclusion">Conclusion</a></li>
-	</ul>
-	</div>
-
-	<div class="slide-footer"><br></div>
-</section> -->
-
 
 
 
@@ -258,172 +222,222 @@
 </section>
 
 
-<section id="sparse" class="center">
 
-	<div class="leftcol" style="width:50%;">
-		<h4 id=""><strong style="color:rgb(30, 30, 203);">Time-varying</strong> Sparse Attack</h4>
-		Define the possible corrupted sensor set as $\mathcal{C}(k)\triangleq \text{supp}\left\{a(k)\right\}$.
-		The attack is called a $p$-sparse attack if $|\mathcal{C}(k)| \leq p,\ \forall k$.
-		
-		<li style="font-size:30px;margin-top: 5%;">
-		The corrupted sensor set is <strong style="color:rgb(30, 30, 203);">time-varying</strong> and has know maximum cardinality.
-		</li>
-	</div>
-	<div class="rightcol" style="width:50%;">
-		<div class="fragment fade-in" data-fragment-index="2" >
-			<h4 id="">Sparse Observability</h4>
-			System $(A,C)$ is $s$-sparse observable if  system $(A,C_{\mathcal{I}\setminus\mathcal{S}})$ is observable
-		 for any set of sensors $\mathcal{S}$ with cardinality $|\mathcal{S}| = s$.
-			<li style="font-size:30px;margin-top: 5%;">
-				System is still observable after removing arbitrary $s$ sensors.
-			</li>
-		</div>
-		
-	</div>
-	<div class="fragment fade-in" data-fragment-index="1" >
-		<div class="imgcontainer">
-			<p>
-				<img data-src="figures/Challenge_no_info.png" alt="Figure" style="margin-top:3%; max-height:100vh" />
-			</p>
-		</div>
-	</div>
+<section>
+	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	$$A=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix}, \quad 
+C=\begin{bmatrix}
+	1 &0\\
+	0&1\\
+	1 &1\\
+	1&2
+\end{bmatrix}.$$
+
+<!-- Recall that the unobservable space w.r.t. sensor $i$ is ${\rm ker} O_i$ . The observbale space  w.r.t. sensor $i$ is $({\rm ker} O_i)^\perp=\rowspan $ as the linear space that  -->
+
+<li>Define that the observbale space  w.r.t. sensor $i$ as $\mathbb{O}_i\triangleq {\rm span} \{C_i^\top , (C_i A)^\top, \cdots, (C_i A^{n-1})^\top \}.$</li>
+
+<li>
+We find that 
+${\rm span}\{e_1\}=\mathbb{O}_1, {\rm span}\{e_2\}=\mathbb{O}_1,{\rm span}\{e_1, e_2\}=\mathbb{O}_1,{\rm span}\{e_1, e_2\}=\mathbb{O}_1 $
+</li>
+
+<!-- <li>The $j$-th entry of state $x$ can be observed by sensor $i$ if $e_j\in \mathbb{O}_i$, where $$e_j\triangleq \begin{matrix}[0 &\cdots &0 &\underbrace{1}_{j\text{-th entry}} &0 &\cdots &0]\end{matrix}^\top$$ </li> -->
+
+
+
+	<!-- with the following Assumption
+
+	Only finite possibilities
+
+	would not happen that can observe x1+x2 nut not x1 x2 individually
+
+	In general, checking the observability relationship is NP hard. But with the Assumption, it can be done in poly time. -->
+	
+
 
 </section>
 
+<section>
+
+<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	$$A=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix}, \quad 
+C=\begin{bmatrix}
+	1 &0\\
+	0&1\\
+	1 &1\\
+	1&2
+\end{bmatrix}.$$
+
+<div style="margin-top: -5%;">We can say:</div>
+
+<li>Sensor 1 can observe state entry 1.</li> 
+
+<li>Sensor 2 can observe state entry 2.</li> 
+
+<li>Sensor 3 can observe state entry 1,2.</li> 
+
+<li>Sensor 4 can observe state entry 1,2.</li> 
+
+<div style="margin-top: 3%;">
+There are only 4 observability possibilities for one sensor:
+</div>
+
+<div>
+(1) Can observe no entry. (2) Can observe entry 1. 
+</div>
+<div>
+(3) Can observe entry 2. (4) Can observe entry 1,2.
+</div>
+
+</section>
+
+<section>
+	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	<h4 id="" >Assumption 1 </h4>
+	All the eigenvalues of matrix $A$ have geometric multiplicity 1.
 
 
+	<h4 id="" >Theorem 1 </h4>
+	If Assumption 1 holds, the observable space of a sensor has a group of canonical basis vector. Thus, a sensor either can observe a state entry or not. $\square$
 
-<!-- <section id="slide-preliminary-result1" class="center">
-	<h4 id="h4_kf" style="margin-top: -2%;">Methods in the literature</h4>
-	<p style="font-size:35px;">
-	1. Sliding window methods 
-	</p>
-	<p style="font-size:25px;">
-	$$ \min_{\hat{x}\in\mathbb{R}^n} \left\|
+	<div style="margin-top: 5%;">Define the observability relationship matrix $\mathcal{Q}$ is constructed by
+	$$
+	[\mathcal{Q}]_{i,j}=\begin{cases}
+	0, e_j\notin \mathbb{O}_i\\
+	1, e_j\in \mathbb{O}_i
+	\end{cases}.\qquad 
+	$$
+
+</div>
+
+<div>
+	Define sensor $i$'s observbale subsystem as $(\tilde{A_i}, \tilde{C_i})$ (linear system with $n_i$ states, 1 sensor)
+</div>
+
+</section>
+
+<section>
+	<div>
+	
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	$$
 	\begin{bmatrix}
-	Y_1-O_1\hat{x}\\
-	Y_2-O_2\hat{x}\\
-	\vdots\\
-	Y_m-O_m\hat{x}
-	\end{bmatrix}		
-	\right\|_p , \ Y_i=\begin{bmatrix}
-	y_i(0)\\y_i(1)\\ \vdots \\ y_i(T-1)\\	\end{bmatrix},
-	O_i=\begin{bmatrix}
-	C_i \\C_iA\\ \vdots \\ C_i A^{T-1}
+	1 &0 &1 &1\\
+	0 &1 &1& 1
 	\end{bmatrix}
 	$$
-	</p>
+	
+	$$
+	\begin{aligned}
+	\tilde{A}_1=[\lambda_1] , \tilde{C}_1=1,\\
+	\tilde{A}_2=[\lambda_2] , \tilde{C}_2=1,\\
+	\tilde{A}_3=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix} , \tilde{C}_3=[1\ 1],\\
+	\tilde{A}_4=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix} , \tilde{C}_4=[1 \ 2],\\
+	\end{aligned}
+	$$
 
-	<div class="imgcontainer">
-		<div about="" typeof="dcmitype:StillImage" class="figure">
-			<img src="./figures/slide-window-en.png" width="700" height="320" style="margin-top:0%; margin-right:0%;">
-		</div>
-	</div>
-	<p style="font-size:20px; margin-top: -1%;">Y. Shoukry and P. Tabuada, "Event-Triggered State Observers for Sparse Sensor Noise/Attacks," in IEEE Transactions on Automatic Control, vol. 61, no. 8, pp. 2079-2091, Aug. 2016, doi: 10.1109/TAC.2015.2492159.</p>
-	<p style="font-size:20px;">H. Fawzi, P. Tabuada and S. Diggavi, "Secure Estimation and Control for Cyber-Physical Systems Under Adversarial Attacks," in IEEE Transactions on Automatic Control, vol. 59, no. 6, pp. 1454-1467, June 2014, doi: 10.1109/TAC.2014.2303233.</p>
+	<!-- Define the number of state entries sensor $i$ can observe as $n_i$. -->
+</div>
 
-</section>
 
-<section id="slide-preliminary-result2" class="center">
-	<h4 id="h4_kf" style="margin-top: -4%;">Methods in the literature</h4>
-	<p style="font-size:35px;">
-	2.1 Switching method: subset combination
-	</p>
+	<!-- The matrix $H_i$ defined as follows satisfy that for any $x\in\mathbb{O}$, $H'_i H_i x=x$ if $x\in\mathbb{O}_i$, and $H'_i H_i x=\mathbf{0}$ if $x\in\mathbb{O}\setminus\mathbb{O}_i$. -->
 
-	<div class="imgcontainer">
-		<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/switch_subset_select(1).PNG" width="450" height="700">
-		</div>
-	</div>
-	<p style="font-size:20px;">S. Mishra, Y. Shoukry, N. Karamchandani, S. N. Diggavi and P. Tabuada, "Secure State Estimation Against Sensor Attacks in the Presence of Noise," in IEEE Transactions on Control of Network Systems, vol. 4, no. 1, pp. 49-59, March 2017, doi: 10.1109/TCNS.2016.2606880.</p>
-
-</section>
-
-<section id="slide-preliminary-result3" class="center">
-	<h4 id="h4_kf" style="margin-top: -4%;">Methods in the literature</h4>
-	<p style="font-size:35px;">
-	2.2 Switching method: subset selection
-	</p>
-
-	<div class="imgcontainer">
-		<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/switch_subset_select(2).PNG" width="450" height="1000">
-		</div>
-	</div>
-
-	<p style="font-size:20px;">Y. Nakahira and Y. Mo, "Attack-Resilient $\mathcal H_2$, $\mathcal H_\infty$, and  $\ell _1$ State Estimator," in IEEE Transactions on Automatic Control, vol. 63, no. 12, pp. 4353-4360, Dec. 2018, doi: 10.1109/TAC.2018.2819686.</p>
-
-</section>
-
-<section id="slide-preliminary-result4" class="center">
-	<h4 id="h4_kf" style="margin-top: -4%;">Methods in the literature</h4>
-	<p style="font-size:35px;">
-	2.3 Switching method: sequential switching
-	</p>
-
-	<div class="imgcontainer">
-		<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/switch_sequential.png" width="550" height="350">
-		</div>
-	</div>
-
-	<p style="font-size:20px;">L. An and G. -H. Yang, "Secure State Estimation Against Sparse Sensor Attacks With Adaptive Switching Mechanism," in IEEE Transactions on Automatic Control, vol. 63, no. 8, pp. 2596-2603, Aug. 2018, doi: 10.1109/TAC.2017.2766759.</p>
-
-</section> -->
-
-<!-- <section id="slide-preliminary-result5" class="center">
-	<h4 id="h4_kf">The computational complexity problem of existing works</h4>
-	<div class="imgcontainer">
-		<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/complexity_table_new.png" width="1200" height="400">
-		</div>
-	</div>
-	<h4 id="h4_kf">Main drawbacks</h4>
-	<div class="leftcol" style="width:50%;">
-		<p style="font-size:40px;">
-		1. sliding window: 
-		<li style="font-size:35px;">information discarded</li> 
-		<li style="font-size:35px;">How to choose window size</li> 
-		</p>
-	</div>
-	<div class="rightcol" style="width:50%;">
-		<p style="font-size:40px;">
-		2. Subset switching:
-		<li style="font-size:35px;">not scalable</li> 
-		</p>
-	</div>
-	 <h4 id="h4_kf", style="margin-top: 6%;">我们希望的结果</h4>
-
-	<p style="font-size:35px;">
-		1. 空间复杂度和受攻击传感器个数关系不大
-	</p>
-	<p style="font-size:35px;">
-		2. 计算时间复杂度较小
-	</p> 
-
-</section> -->
-
-<section id="Security of Linear Estimator" >
-	<h4 id="h4_kf">Analyzing why linear estimator is not secure</h4>
-	<p style="font-size:35px;">
-		The following estimator gain $K$ can be obtained from robust control theory.
-	</p>
-		<ul style="font-size:40px;">
-			\(
-			\begin{align}
-			\hat{x}(k+1)&=(A-K C ) \hat{x}(k)+K y(k),\\
-			&=(A-K C ) \hat{x}(k)+\left[\begin{array}{c|c|c}K_1&\vdots&K_m \end{array}\right]\begin{bmatrix}y_1(k)\\ \vdots\\y_m(k)\end{bmatrix},\\
-			&=(A-K C ) \hat{x}(k)+\sum_{i=1}^m K_i y_i(k),
+	<!-- Moreover, if Assumption 1 holds, $H_i$ can be constructed as the following $n_i\times n$ matrix: -->
+			<!-- \begin{align}\label{eq:defH}
+				H_i = 
+				\begin{bmatrix}
+					\mathbf{e}_{j_1}& \mathbf{e}_{j_2}& \cdots &\mathbf{e}_{j_{n_i}}
+				\end{bmatrix}^\top
 			\end{align}
-			\)
-		</ul>
-		<ul style="font-size:40px;margin-right: 20%;margin-top: 3%">
-		<img src="./figures/LE_flow.png" width="900" height="200">
-	</ul>
+			where $\{j_1,\cdots,j_{n_i}\}=\mathcal{Q}_i$ with $\mathcal{Q}_i\triangleq \{j=1,\cdots,n\ |\ O_i \mathbf{e}_j\neq \mathbf{0} \}.$
+			<div style="margin-top: 5%;"></div>
+			Moreover, $\tilde{A_i}\triangleq H_i A H'_i ,\ \tilde{C_i}\triangleq C_i H'_i, \text{ and } (\tilde{A_i},\tilde{C_i})$ is <strong>observable</strong> -->
+	
 </section>
 
 
-<section id="Information Flow of Our Proposed Estimator" class="center">
+<section>
+
+	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+	
+		$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	$$
+	\begin{bmatrix}
+	1 &0 &1 &1\\
+	0 &1 &1& 1
+	\end{bmatrix}
+	$$
+	
+	
+	</section>
+
+
+
+
+<!-- <section>
+	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+
+	<div class="leftcol" style="width:80%;">
+		<div style="margin-bottom: 47%;margin-left: 20%;" class="imgcontainer"><img src="./figures/decompose_obs_space.png" width="1800" height="1300"></div>
+			<div class="r-stack" style="margin-top: 0%;">
+				<span class="fragment fade-in" data-fragment-index="1">
+				<h4 id="" >Our idea: </h4>
+				
+					<strong style="color:rgb(0, 0, 0);"> construct local reduced order observer at each sensor and fuse them resiliently. </strong>
+				
+				</span>
+		</div> 
+	</div>
+
+</section> -->
+
+
+
+
+
+
+<!-- <section id="Information Flow of Our Proposed Estimator" class="center">
 
 	<div class="leftcol" style="width:50%;">
 		<div style="margin-bottom: 60%;" class="imgcontainer"><img src="./figures/raw/kalman.png" width="700" height="300"></div>
@@ -441,108 +455,12 @@
 			$$
 		</div>
 	</div>
-
-	<!-- <h4 id="h4_kf">Our Goal besides Secure Estimation</h4>
-	<li style="font-size:35px;">Scalable (Complexity is not determined by corrupted sensor number)</li> 
-	<li style="font-size:35px;">Flexible (Can be used in distributed and Asynchronous case)</li>  -->
-
-	<!-- <h4 id="" style="margin-top: 3%;">Our Proposed Estimator</h4>
-    <div class="r-stack" style="margin-top: 0%;">
-    <span class="fragment fade-out" data-fragment-index="1">
-        <img src="./figures/dis_flow1.png" width="800" height="500" style="margin-right:10%;">
-    </span>
-
-    <span class="fragment fade-in" data-fragment-index="1">
-        <img src="./figures/dis_flow2.png" width="800" height="500" style="margin-right:10%;">
-    </span>
-
-    </div> -->
 	
-</section>
+</section> -->
 
 
 
 
-<section>
-	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
-	<!-- <div style="margin-bottom: 5%;" class="imgcontainer"><img src="./figures/decompose_obs_space.png" width="800" height="1400"></div> -->
-	<div class="leftcol" style="width:80%;">
-		<div style="margin-bottom: 47%;margin-left: 20%;" class="imgcontainer"><img src="./figures/decompose_obs_space.png" width="1800" height="1300"></div>
-			<div class="r-stack" style="margin-top: 0%;">
-				<span class="fragment fade-in" data-fragment-index="1">
-				<h4 id="" >Our idea: </h4>
-				<!-- <div style="font-size:40px;"> -->
-					<strong style="color:rgb(0, 0, 0);"> construct local reduced order observer at each sensor and fuse them resiliently. </strong>
-				<!-- </div> -->
-				</span>
-		</div> 
-	</div>
-	
-	<!-- <div class="r-stack" style="margin-top: 0%;">
-		<span class="fragment fade-in" data-fragment-index="1">
-		<h4 id="" >Our idea: </h4>
-		<div style="font-size:40px;">
-			<strong style="color:rgb(0, 0, 0);"> construct local reduced order observer at each sensor and fuse them resiliently. </strong>
-		</div>
-		</span>
-	</div> -->
-
-	<!-- consider a simple illustrative example where -->
-		<!-- $$A=\begin{bmatrix}
-			\lambda_1 &0&0\\
-			0& \lambda_2 & 1\\
-			0&0&\lambda_2
-		\end{bmatrix}, \quad 
-		C=\begin{bmatrix}
-			1 &0&0\\
-			0&1&0
-		\end{bmatrix}\
-		\textcolor{orange}{O_1=\begin{bmatrix}
-		1 & 0& 0\\
-		\lambda_1 & 0& 0\\
-		\lambda_1^2 & 0& 0\\
-		\end{bmatrix}},\
-		\textcolor{blue}{O_2=\begin{bmatrix}
-		0 & 1& 0\\
-		0 & \lambda_2 & 0\\
-		0 & \lambda_2^2 & \lambda_1+\lambda_2\\
-		\end{bmatrix}},\
-		$$
-		$$\textcolor{orange}{\mathbb{R}^1\sim {\rm span}\left(\begin{bmatrix}1\\0\\0\end{bmatrix}\right)},
-		\textcolor{blue}{\mathbb{R}^2\sim {\rm span}\left(\begin{bmatrix}0\\1\\0\end{bmatrix},\begin{bmatrix}0\\0\\1\end{bmatrix}\right)} , $$
-		 -->
-		<!-- Then, notice that $(A,C_1)$ can only observe state 1, $(A,C_2)$ can observe state 2 and 3. We intend to construct two observers with dimension 1 and 2 observing:
-	$$\textcolor{orange}{\tilde{A}_1=\lambda_1,\; \tilde{C}_1=1},\quad \textcolor{blue}{\tilde{A}_2=\begin{bmatrix}
-		\lambda_2 & 1\\
-		0&\lambda_2
-	\end{bmatrix}, \; \tilde{C}_2=\begin{bmatrix}
-		1 &0
-	\end{bmatrix}}.$$ -->
-
-</section>
-
-<section>
-	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
-
-	<h4 id="" >Assumption 1 </h4>
-	All the eigenvalues of matrix $A$ have geometric multiplicity 1.
-
-
-	<h4 id="" >Theorem 1 </h4>
-	If Assumption 1 holds, matrix $H_i$ defined as follows satisfy that for any $x\in\mathbb{O}$, $H'_i H_i x=x$ if $x\in\mathbb{O}_i$, and $H'_i H_i x=\mathbf{0}$ if $x\in\mathbb{O}\setminus\mathbb{O}_i$.
-
-	<!-- Moreover, if Assumption 1 holds, $H_i$ can be constructed as the following $n_i\times n$ matrix: -->
-			\begin{align}\label{eq:defH}
-				H_i = 
-				\begin{bmatrix}
-					\mathbf{e}_{j_1}& \mathbf{e}_{j_2}& \cdots &\mathbf{e}_{j_{n_i}}
-				\end{bmatrix}^\top
-			\end{align}
-			where $\{j_1,\cdots,j_{n_i}\}=\mathcal{Q}_i$ with $\mathcal{Q}_i\triangleq \{j=1,\cdots,n\ |\ O_i \mathbf{e}_j\neq \mathbf{0} \}.$
-			<div style="margin-top: 5%;"></div>
-			Moreover, $\tilde{A_i}\triangleq H_i A H'_i ,\ \tilde{C_i}\triangleq C_i H'_i, \text{ and } (\tilde{A_i},\tilde{C_i})$ is <strong>observable</strong>
-	
-</section>
 <!-- <section>
 	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
 $$
@@ -609,19 +527,16 @@ $$
 <section style="font-size: 20pt;">
 	<h4 id="">Example on Resilient Fusion</h4>
 	<div class="leftcol" style="margin-left: -1%;margin-right: 0%">
-		$$A=\begin{bmatrix}
-			\lambda_1 &0&0\\
-			0& \lambda_2 & 1\\
-			0&0&\lambda_2
-		\end{bmatrix}, \quad 
-		C=\begin{bmatrix}
-			1 &0&0\\
-			0&1&0\\
-			1 &0&0\\
-			0&1&1\\
-			1 &0&0\\
-			0&0&1
-		\end{bmatrix}.$$
+		<!-- $$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$ -->
 		
 	<!-- $$\tilde{A}_1=\lambda_1,\; \tilde{C}_1=1,\quad \tilde{A}_2=\begin{bmatrix}
 		\lambda_2 & 1\\
@@ -630,10 +545,10 @@ $$
 		1 &0
 	\end{bmatrix}, \cdots$$ -->
 	<div>
-		Construct 6 local observers :
-		$$\eta_1(k+1)=(\tilde{A}_1-L_1 \tilde{C}_1 )\eta_1(k)+L_1 y_1(k).$$
+		Construct 4 local observers :
+		$$\tilde{x}^1(k+1)=(\tilde{A}_1-L_1 \tilde{C}_1 )\tilde{x}^1(k)+L_1 y_1(k).$$
 		$$\vdots$$
-		$$\eta_6(k+1)=(\tilde{A}_6-L_6 \tilde{C}_6 )\eta_6(k)+L_6 y_6(k).$$
+		$$\tilde{x}^4(k+1)=(\tilde{A}_4-L_4 \tilde{C}_4 )\tilde{x}^4(k)+L_6 y_6(k).$$
 	
 	
 		
@@ -695,6 +610,62 @@ $$
 
 </section>
 
+
+
+
+<section id="slide-problem-formulation1">
+	<h3>Resilient Estimation</h3>
+	<!-- <div class="r-stack"> -->
+		<!-- <div class="fragment fade-out" data-fragment-index="1" >
+			<div class="imgcontainer">
+				<p>
+					<img data-src="figures/estimation_problem.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
+				</p>
+			</div>
+		</div> -->
+		<!-- <div class="fragment fade-in" data-fragment-index="1" > -->
+			<div class="imgcontainer">
+				<p>
+					<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
+				</p>
+		<!-- </div> -->
+		<!-- </div> -->
+	</div>
+
+</section>
+
+
+<section id="sparse" class="center">
+
+	<div class="leftcol" style="width:50%;">
+		<h4 id=""><strong style="color:rgb(30, 30, 203);">Time-varying</strong> Sparse Attack</h4>
+		Define the possible corrupted sensor set as $\mathcal{C}(k)\triangleq \text{supp}\left\{a(k)\right\}$.
+		The attack is called a $p$-sparse attack if $|\mathcal{C}(k)| \leq p,\ \forall k$.
+		
+		<li style="font-size:30px;margin-top: 5%;">
+		The corrupted sensor set is <strong style="color:rgb(30, 30, 203);">time-varying</strong> and has know maximum cardinality.
+		</li>
+	</div>
+	<div class="rightcol" style="width:50%;">
+		<div class="fragment fade-in" data-fragment-index="2" >
+			<h4 id="">Sparse Observability</h4>
+			System $(A,C)$ is $s$-sparse observable if  system $(A,C_{\mathcal{I}\setminus\mathcal{S}})$ is observable
+		 for any set of sensors $\mathcal{S}$ with cardinality $|\mathcal{S}| = s$.
+			<li style="font-size:30px;margin-top: 5%;">
+				System is still observable after removing arbitrary $s$ sensors.
+			</li>
+		</div>
+		
+	</div>
+	<div class="fragment fade-in" data-fragment-index="1" >
+		<div class="imgcontainer">
+			<p>
+				<img data-src="figures/Challenge_no_info.png" alt="Figure" style="margin-top:3%; max-height:100vh" />
+			</p>
+		</div>
+	</div>
+
+</section>
 
 <section>
 	<h4 id="">Secure Estimation Algorithm </h4>
