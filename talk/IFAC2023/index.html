@@ -233,7 +233,7 @@
 	<li>process noise $w(k)$ and measurement noise $v(k)$ are bounded: $\|w(k)\|_2\leq\mathcal{B}_w $, $\|v(k)\|_2\leq\mathcal{B}_v $.</li>
 	<li> <strong><em style="color:var(--myred);">$(A,C)$ is observable</em></strong>. Note that <strong><em style="color:var(--myred);">$(A, C_i)$ is not necessarily observable</em></strong>.</li>
 	
-	<li><strong>Target</strong> : $\|\hat{x}(k)-x(k)\|\leq \text{Constant}$ for all admissable attacks.</li>
+	<li><strong>Target</strong> : $\|\hat{x}(k)-x(k)\|\leq \text{Constant}$ for all admissable attacks. (Consider unstable $A$ for non-trivial.)</li>
 </ul>
 </section>
 
@@ -348,6 +348,8 @@ There are only 4 observability possibilities for one sensor:
 
 	citation:
 
+	Also seen in median based dis solver paper
+
 </div>
 
 </section>
@@ -371,7 +373,7 @@ There are only 4 observability possibilities for one sensor:
 	</div>
 
 	<div>
-		Define sensor $i$'s observable subsystem as $(\tilde{A_i}, \tilde{C_i})$ (linear system with $n_i$ states, 1 sensor)
+		Define sensor $i$'s reduced-order subsystem as $(\tilde{A_i}, \tilde{C_i})$, it is observable. (linear system with $n_i$ states, 1 sensor)
 	</div>
 
 
