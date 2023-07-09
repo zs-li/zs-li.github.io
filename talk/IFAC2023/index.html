@@ -147,28 +147,42 @@
 </section> -->
 
 <section id="slide-problem-formulation">
-	<h3>Resilient Estimation</h3>
-	<!-- <div class="r-stack"> -->
-		<!-- <div class="fragment fade-out" data-fragment-index="1" >
-			<div class="imgcontainer">
-				<p>
-					<img data-src="figures/estimation_problem.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
-				</p>
-			</div>
-		</div> -->
-		<!-- <div class="fragment fade-in" data-fragment-index="1" > -->
-			<div class="imgcontainer">
+	<h3>Resilient Estimation against sparse attack</h3>
+	<div>	
+		<strong>$p$ sparse attack:</strong>
+		The corrupted sensor set $\mathcal{C}$ satisfies $|\mathcal{C}| \leq p,\ \forall k$.</div>
+
+		<div class="imgcontainer">
 				<p>
 					<img data-src="figures/static_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
 				</p>
-		<!-- </div> -->
-		<!-- </div> -->
+		</div>
+
+</section>
+
+<section id="slide-problem-formulation1">
+	<h3>Resilient Estimation against time-varying sparse attack</h3>
+	<div>	
+		<strong>Time-varying $p$ sparse attack:</strong>
+		The corrupted sensor set $\mathcal{C}(k)$ satisfies $|\mathcal{C}(k)| \leq p,\ \forall k$.</div>
+
+	<div class="imgcontainer">
+		<p>
+			<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
+		</p>
 	</div>
 
 </section>
 
+<!-- <section id="slide-problem-formulation1"> -->
+	
 
 
+		<!-- <p> -->
+			<!-- <img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%;margin-bottom:4%; max-height:60vh" /> -->
+		<!-- </p> -->	
+
+<!-- </section> -->
 
 
 <section class="center">
@@ -218,12 +232,25 @@
 	</li>
 	<li>process noise $w(k)$ and measurement noise $v(k)$ are bounded: $\|w(k)\|_2\leq\mathcal{B}_w $, $\|v(k)\|_2\leq\mathcal{B}_v $.</li>
 	<li> <strong><em style="color:var(--myred);">$(A,C)$ is observable</em></strong>. Note that <strong><em style="color:var(--myred);">$(A, C_i)$ is not necessarily observable</em></strong>.</li>
-	</ul>
+	
+	<li><strong>Target</strong> : $\|\hat{x}(k)-x(k)\|\leq \text{Constant}$ for all admissable attacks.</li>
+</ul>
 </section>
 
 
-
 <section>
+	<h3 id="">Decomposition-Fusion</h3>
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/raw/decompose_kalman.png" width="600" height="400" style="margin-top:1%; margin-right:0%;">
+	</div>
+
+	<!-- talk/IFAC2023/figures/raw/decompose_kalman.png -->
+
+	
+</section>
+
+
+<section style="font-size: 28pt;">
 	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
 
 	$$A=\begin{bmatrix}
@@ -237,14 +264,16 @@ C=\begin{bmatrix}
 	1&2
 \end{bmatrix}.$$
 
-<!-- Recall that the unobservable space w.r.t. sensor $i$ is ${\rm ker} O_i$ . The observbale space  w.r.t. sensor $i$ is $({\rm ker} O_i)^\perp=\rowspan $ as the linear space that  -->
+<!-- Recall that the unobservable space w.r.t. sensor $i$ is ${\rm ker} O_i$ . The observable space  w.r.t. sensor $i$ is $({\rm ker} O_i)^\perp=\rowspan $ as the linear space that  -->
 
-<li style="margin-left: -5%;">Define that the observbale space  w.r.t. sensor $i$ as $$\mathbb{O}_i\triangleq {\rm span} \{C_i^\top , (C_i A)^\top, \cdots, (C_i A^{n-1})^\top \}.$$</li>
+<li style="margin-left: -5%;">Define that the observable space  w.r.t. sensor $i$ as $$\mathbb{O}_i\triangleq {\rm span} \{C_i^\top , (C_i A)^\top, \cdots, (C_i A^{n-1})^\top \}.$$</li>
 
 <li style="margin-left: -5%;">
 We find that 
-${\rm span}\{e_1\}=\mathbb{O}_1, {\rm span}\{e_2\}=\mathbb{O}_1,{\rm span}\{e_1, e_2\}=\mathbb{O}_1,{\rm span}\{e_1, e_2\}=\mathbb{O}_1 $
+$\mathbb{O}_1={\rm span}\{e_1\}, \mathbb{O}_2={\rm span}\{e_2\},\mathbb{O}_3={\rm span}\{e_1, e_2\}, \mathbb{O}_4={\rm span}\{e_1, e_2\} $, 
+where <div style="margin-top: -1%;">$$e_1\triangleq \begin{bmatrix}1& 0\end{bmatrix}^\top , e_2\triangleq \begin{bmatrix}0& 1\end{bmatrix}^\top $$</div>
 </li>
+
 
 <!-- <li>The $j$-th entry of state $x$ can be observed by sensor $i$ if $e_j\in \mathbb{O}_i$, where $$e_j\triangleq \begin{matrix}[0 &\cdots &0 &\underbrace{1}_{j\text{-th entry}} &0 &\cdots &0]\end{matrix}^\top$$ </li> -->
 
@@ -287,7 +316,7 @@ C=\begin{bmatrix}
 
 <li>Sensor 4 can observe state entry 1,2.</li> 
 
-<div style="margin-top: 3%;">
+<div style="margin-top: 2%;">
 There are only 4 observability possibilities for one sensor:
 </div>
 
@@ -308,9 +337,18 @@ There are only 4 observability possibilities for one sensor:
 
 
 	<h4 style="margin-top: 4%;" >Theorem 1 </h4>
-	If Assumption 1 holds, the observable space of a sensor has a group of canonical basis vector. Thus, a sensor either can observe a state entry or not. 
+	If Assumption 1 holds, the observable space of a sensor has a group of <strong>canonical</strong> basis vector. Thus, a sensor either can observe a state entry or not. 
+	<div class="r-stack">
+		<span class="fragment fade-in" data-fragment-index="1">
 
-	
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/geo_mul.png" width="600" height="270" style="margin-top:4%; margin-right:0%;">
+	</div>
+	</span>
+
+	citation:
+
+</div>
 
 </section>
 
@@ -333,8 +371,10 @@ There are only 4 observability possibilities for one sensor:
 	</div>
 
 	<div>
-		Define sensor $i$'s observbale subsystem as $(\tilde{A_i}, \tilde{C_i})$ (linear system with $n_i$ states, 1 sensor)
+		Define sensor $i$'s observable subsystem as $(\tilde{A_i}, \tilde{C_i})$ (linear system with $n_i$ states, 1 sensor)
 	</div>
+
+
 
 	<!-- <div style="font-size: 20pt;">
 
@@ -567,7 +607,7 @@ There are only 4 observability possibilities for one sensor:
 		</span>
 
 		<span  class="fragment fade-in" data-fragment-index="3">
-			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med2.png" width="800" height="260"></div>
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="800" height="260"></div>
 		</span>
 	</div>
 
@@ -593,7 +633,9 @@ There are only 4 observability possibilities for one sensor:
 	\|\hat{x}(k)-x(k)\|_\infty\leq {\rm Constant}\qquad \qquad \qquad \quad$$
 
 
-	
+	<p style="font-size: 30pt; margin-top: 20%;">
+		<strong>$2p$ sparse observable:</strong> System is still observable after removing arbitrary $2p$ sensors.
+	</p>
 
 </section>
 
@@ -612,6 +654,10 @@ There are only 4 observability possibilities for one sensor:
 
 	$$
 	\|\hat{x}(k)-x(k)\|_\infty\leq {\rm Constant}(\mathcal{B}_w,\mathcal{B}_v,A,C,L_i) $$
+
+	<p style="font-size: 30pt; margin-top: 20%;">
+		<strong>$2p$ sparse observable:</strong> System is still observable after removing arbitrary $2p$ sensors.
+	</p>
 
 	
 </section>
@@ -645,7 +691,7 @@ There are only 4 observability possibilities for one sensor:
 </section>
 
 
-
+<!-- 
 <section id="slide-problem-formulation1">
 	
 
@@ -656,18 +702,12 @@ There are only 4 observability possibilities for one sensor:
 		<strong>Time-varying $p$ sparse attack:</strong>
 		The corrupted sensor set $\mathcal{C}(k)$ satisfies $|\mathcal{C}(k)| \leq p,\ \forall k$.</div>
 
-	<!-- <div class="imgcontainer"> -->
-		<!-- <p> -->
 			<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%;margin-bottom:4%; max-height:60vh" />
-		<!-- </p> -->
-	
-	<!-- </div> -->
 
 	<div> </div>
 
-	
 
-</section>
+</section> -->
 
 
 <section id="varying attack not works">
@@ -740,7 +780,7 @@ There are only 4 observability possibilities for one sensor:
 <section>
 	<h4 id="">Secure Estimation Algorithm </h4>
 
-	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1800"></div>
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo_step1.png" width="1800" height="1800"></div>
 
 	<div style="font-size:30px; margin-top: 40%;">
 	Step 1: update local observer state.
@@ -751,7 +791,7 @@ There are only 4 observability possibilities for one sensor:
 <section>
 	<h4 id="">Secure Estimation Algorithm</h4>
 
-	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo_step2.png" width="1800" height="1200"></div>
 
 	<div style="font-size:30px; margin-top: 35%;">
 	Step 2: For each state entry,  take median among all local states that can observe them.
@@ -871,8 +911,9 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	<h5 style="margin-top: 3%;">Where is the fundamental limit?</h5>
 	<!-- $$2p\text{-sparse observability} > \text{Fundamental limit for time-varying sparse attack}  \geq  1 \text{ step }2p\text{-sparse observability}$$ -->
 	<p>
-		<img src="./figures/obs1.PNG" width="1400" height="350" style="margin-top:0%; margin-right:0%;">
+		<img src="./figures/obs1.PNG" width="1400" height="270" style="margin-top:0%; margin-right:0%;">
 	</p>
+	<p>Citation</p>
 
 	<!-- <div style="margin-left: 0%">
 		$$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$$
@@ -896,9 +937,9 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	</div>
 
 	<p>
-		<img src="./figures/obs2.PNG" width="1400" height="350" style="margin-top:0%; margin-right:0%;">
+		<img src="./figures/obs2.PNG" width="1400" height="270" style="margin-top:0%; margin-right:0%;">
 	</p>
-
+	<p>Citation</p>
 	
 
 </section>
@@ -918,7 +959,7 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 <section id="Remark on Condition (2)" class="center" > 
 	<h4 id="" >Remark on the error bound</h4>
 	<div style="margin-left: 20%">
-	$\|\hat{x}(0)-x(0)\|_{\infty}\leq \gamma \Rightarrow \|\hat{x}(k)-x(k)\|_{\infty}$ 
+	$\|\hat{x}(0)-x(0)\|_{\infty}\leq \gamma \Rightarrow \|\hat{x}(k)-x(k)\|_{\infty}\leq \gamma$ 
 	</div>
 	<p style="font-size:40px;">
 	<!-- The initial estimation should be "accurate". -->
@@ -1184,9 +1225,9 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	<li>Step 3: Detection and reset</li>
 
 	<h5 style="font-size: 40px; margin-top: 1%;">Requirements </h5>
-	<li>$2p$-sparse observability (same with time-invariant attack)</li>
+	<li>Condition on observability (closer to fundamental limit)</li>
 	<li>Non-derogatory dynamic matrix $A$</li>
-	<li>stable enough local observer: $\sigma_{\max} (A-L_iC)<1/(2\sqrt{n_i}+1)$</li>
+	<!-- <li>stable enough local observer: $\sigma_{\max} (A-L_iC)<1/(2\sqrt{n_i}+1)$</li> -->
 
 	<h5 style="font-size: 40px; margin-top: 1%;">Results </h5>
 	<li>secure estimation $\|\hat{x}(k)-x(k)\|_\infty\leq \gamma$.</li>
