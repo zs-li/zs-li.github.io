@@ -239,9 +239,9 @@ C=\begin{bmatrix}
 
 <!-- Recall that the unobservable space w.r.t. sensor $i$ is ${\rm ker} O_i$ . The observbale space  w.r.t. sensor $i$ is $({\rm ker} O_i)^\perp=\rowspan $ as the linear space that  -->
 
-<li>Define that the observbale space  w.r.t. sensor $i$ as $\mathbb{O}_i\triangleq {\rm span} \{C_i^\top , (C_i A)^\top, \cdots, (C_i A^{n-1})^\top \}.$</li>
+<li style="margin-left: -5%;">Define that the observbale space  w.r.t. sensor $i$ as $$\mathbb{O}_i\triangleq {\rm span} \{C_i^\top , (C_i A)^\top, \cdots, (C_i A^{n-1})^\top \}.$$</li>
 
-<li>
+<li style="margin-left: -5%;">
 We find that 
 ${\rm span}\{e_1\}=\mathbb{O}_1, {\rm span}\{e_2\}=\mathbb{O}_1,{\rm span}\{e_1, e_2\}=\mathbb{O}_1,{\rm span}\{e_1, e_2\}=\mathbb{O}_1 $
 </li>
@@ -277,7 +277,7 @@ C=\begin{bmatrix}
 	1&2
 \end{bmatrix}.$$
 
-<div style="margin-top: -5%;">We can say:</div>
+<div style="margin-top: -5%;">We find:</div>
 
 <li>Sensor 1 can observe state entry 1.</li> 
 
@@ -310,19 +310,50 @@ There are only 4 observability possibilities for one sensor:
 	<h4 id="" >Theorem 1 </h4>
 	If Assumption 1 holds, the observable space of a sensor has a group of canonical basis vector. Thus, a sensor either can observe a state entry or not. $\square$
 
+	
+
+</section>
+
+
+<section id="Q0">
+
 	<div style="margin-top: 5%;">Define the observability relationship matrix $\mathcal{Q}$ is constructed by
-	$$
-	[\mathcal{Q}]_{i,j}=\begin{cases}
-	0, e_j\notin \mathbb{O}_i\\
-	1, e_j\in \mathbb{O}_i
-	\end{cases}.\qquad 
-	$$
+		$$
+		[\mathcal{Q}]_{i,j}=\begin{cases}
+		0, e_j\notin \mathbb{O}_i\\
+		1, e_j\in \mathbb{O}_i
+		\end{cases}.\qquad 
+		$$
+	
+	</div>
+	
+	<div>
+		Define sensor $i$'s observbale subsystem as $(\tilde{A_i}, \tilde{C_i})$ (linear system with $n_i$ states, 1 sensor)
+	</div>
 
-</div>
 
-<div>
-	Define sensor $i$'s observbale subsystem as $(\tilde{A_i}, \tilde{C_i})$ (linear system with $n_i$ states, 1 sensor)
-</div>
+
+	<!-- <div style="font-size: 20pt;">
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+</div> -->
+
+	<!-- <div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q1.png" width="650" height="300" style="margin-top:-1%; margin-right:0%;">
+	</div> -->
+	
+	
+
 
 </section>
 
@@ -343,7 +374,7 @@ There are only 4 observability possibilities for one sensor:
 	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
 
 	<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/Q1.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+		<img src="./figures/Q1.png" width="650" height="300" style="margin-top:-1%; margin-right:0%;">
 	</div>
 	
 	
@@ -383,7 +414,7 @@ There are only 4 observability possibilities for one sensor:
 	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
 
 	<div about="" typeof="dcmitype:StillImage" class="figure">
-		<img src="./figures/Q2.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+		<img src="./figures/Q2.png" width="650" height="300" style="margin-top:-1%; margin-right:0%;">
 	</div>
 	
 
@@ -482,7 +513,7 @@ There are only 4 observability possibilities for one sensor:
 
 
 <section style="font-size: 20pt;">
-	<h4 id="">Example on Resilient Fusion</h4>
+	<h2 id="">Example on Resilient Fusion</h4>
 	<!-- <div class="leftcol" style="margin-left: -1%;margin-right: 0%"> -->
 		<!-- $$A=\begin{bmatrix}
 		\lambda_1 &0\\
@@ -501,7 +532,7 @@ There are only 4 observability possibilities for one sensor:
 	\end{bmatrix}, \; \tilde{C}_2=\begin{bmatrix}
 		1 &0
 	\end{bmatrix}, \cdots$$ -->
-	<div style="font-size: 35pt;">
+	<div style="font-size: 32pt;">
 		<!-- Construct 4 local observers :
 		$$\tilde{x}^3(k+1)=(\tilde{A}_3-L_3 \tilde{C}_3 )\tilde{x}^3(k)+L_3 y_3(k).$$
 		$$\vdots$$
@@ -515,30 +546,25 @@ There are only 4 observability possibilities for one sensor:
 	
 		
 	</div>
-<!-- </div> -->
+	<div style="font-size: 32pt;">
 	Fuse those subsystems by taking median:
-
-<!-- <div class="rightcol" style="margin-left: -1%;margin-right: 0%;"> -->
 	
+</div>
 
-	<!-- $$\hat{x}(k)=f(H_1^\top \eta_1(k), H_2^\top \eta_2(k))$$ -->
-	<!-- $$\begin{bmatrix}x_1 \\ \cdot \\ \cdot \end{bmatrix},
-	\begin{bmatrix}\cdot \\ x_2 \\ x_3 \end{bmatrix},
-	\begin{bmatrix}x_1 \\ \cdot \\ \cdot \end{bmatrix},
-	\begin{bmatrix}\cdot \\ x_2 \\ x_3 \end{bmatrix},
-	\begin{bmatrix}x_1 \\ \cdot \\ \cdot \end{bmatrix},
-	\begin{bmatrix}\cdot \\ \cdot \\ x_3 \end{bmatrix}
-	$$ -->
 	<div class="r-stack">
 
 
 		<span class="fragment fade-in" data-fragment-index="1">
 			
-			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/med_before.png" width="1200" height="400"></div>
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med.png" width="800" height="260"></div>
 		</span>
 
 		<span  class="fragment fade-in" data-fragment-index="2">
-			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/med.png" width="1200" height="400"></div>
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med1.png" width="800" height="260"></div>
+		</span>
+
+		<span  class="fragment fade-in" data-fragment-index="3">
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med2.png" width="800" height="260"></div>
 		</span>
 	</div>
 
@@ -547,14 +573,35 @@ There are only 4 observability possibilities for one sensor:
 
 </section>
 
-<section id="inter-result">
+<section id="inter-result1">
 	<h4 id="">Secure Estimation Algorithm against static sparse attack</h4>
 
 	<h4 id="" style="margin-top: 1%">Lemma 1</h4>
 
 	<!-- <div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div> -->
 
-	$$[\hat{x}(k)]_j={\rm med}\left\{[H_i^\top \eta_i(k)]_j, j\in\mathcal{Q}_i\right\}$$
+	<!-- $$[\hat{x}(k)]_j={\rm med}\left\{[H_i^\top \eta_i(k)]_j, j\in\mathcal{Q}_i\right\}$$ -->
+
+	<div style="font-size:40px; margin-top: 0%;">
+	If the system is $2p$ sparse observable, then $\hat{x}(k)$ above has uniformly bounded error under <strong>static sparse attack</strong> where ${\rm supp} \{a(k)\}\subset \mathcal{C}$.
+	</div>
+
+	$$
+	\|\hat{x}(k)-x(k)\|_\infty\leq {\rm Constant}\qquad \qquad \qquad \quad$$
+
+
+	
+
+</section>
+
+<section id="inter-result2">
+	<h4 id="">Secure Estimation Algorithm against static sparse attack</h4>
+
+	<h4 id="" style="margin-top: 1%">Lemma 1</h4>
+
+	<!-- <div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div> -->
+
+	<!-- $$[\hat{x}(k)]_j={\rm med}\left\{[H_i^\top \eta_i(k)]_j, j\in\mathcal{Q}_i\right\}$$ -->
 
 	<div style="font-size:40px; margin-top: 0%;">
 	If the system is $2p$ sparse observable, then $\hat{x}(k)$ above has uniformly bounded error under <strong>static sparse attack</strong> where ${\rm supp} \{a(k)\}\subset \mathcal{C}$.
@@ -563,40 +610,99 @@ There are only 4 observability possibilities for one sensor:
 	$$
 	\|\hat{x}(k)-x(k)\|_\infty\leq {\rm Constant}(\mathcal{B}_w,\mathcal{B}_v,A,C,L_i) $$
 
+	
+</section>
 
-	<h4 id="" style="margin-top: 4%">For time-varying attack</h4>
-	<div>
-		Since time-varying attack may deteriorate all local states $\eta_i(k)$, we need a <strong>detection</strong> and <strong>reset</strong> mechanism.
-	</div>
+
+
+
+
+<section id="static attack works">
+
+	<h4 id="" style="margin-top: 1%">Result under attack on fixed set</h4>
+
+	<div style="margin-top: 10%; margin-left: 0%; margin-right: 0%;" class="imgcontainer"><img src="./figures/local_states_static.png" width="1100" height="600"></div>
 
 </section>
 
+<section id="static attack works">
+
+	<h4 id="" style="margin-top: 1%">Result under attack on fixed set</h4>
+
+	<div style="margin-top: 10%; margin-left: 0%; margin-right: 0%;" class="imgcontainer"><img src="./figures/local_states_static1.png" width="1100" height="600"></div>
+
+</section>
+
+<section id="static attack works">
+
+	<h4 id="" style="margin-top: 1%">Result under attack on fixed set</h4>
+
+	<div style="margin-top: 10%; margin-left: 0%; margin-right: 0%;" class="imgcontainer"><img src="./figures/local_states_static2.png" width="1100" height="600"></div>
+
+</section>
 
 
 
 <section id="slide-problem-formulation1">
-	<h3>Resilient Estimation</h3>
-	<!-- <div class="r-stack"> -->
-		<!-- <div class="fragment fade-out" data-fragment-index="1" >
-			<div class="imgcontainer">
-				<p>
-					<img data-src="figures/estimation_problem.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
-				</p>
-			</div>
-		</div> -->
-		<!-- <div class="fragment fade-in" data-fragment-index="1" > -->
-			<div class="imgcontainer">
-				<p>
-					<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
-				</p>
-		<!-- </div> -->
-		<!-- </div> -->
-	</div>
+	
+
+	<h3 style="margin-top: -0%;">What about time-varying corrupted sensor set?</h3>
+
+
+	<div>	
+		<strong>Time-varying $p$ sparse attack:</strong>
+		The corrupted sensor set $\mathcal{C}(k)$ satisfies $|\mathcal{C}(k)| \leq p,\ \forall k$.</div>
+
+	<!-- <div class="imgcontainer"> -->
+		<!-- <p> -->
+			<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%;margin-bottom:4%; max-height:60vh" />
+		<!-- </p> -->
+	
+	<!-- </div> -->
+
+	<div> </div>
+
+	
 
 </section>
 
 
-<section id="sparse" class="center">
+<section id="varying attack not works">
+
+	<h4 id="" style="margin-top: 1%">What about time-varying corrupted sensor set?</h4>
+
+	<div style="margin-top: 1%; margin-left: -20%; margin-right: 20%;" class="imgcontainer"><img src="./figures/local_states_vary_attack.png" width="900" height="900"></div>
+
+</section>
+	
+
+<section id="varying attack not works">
+
+	<h4 id="" style="margin-top: 1%">What about time-varying corrupted sensor set?</h4>
+
+	<div style="margin-top: 1%; margin-left: -0%; margin-right: 10%;" class="imgcontainer"><img src="./figures/local_states_vary1.png" width="1100" height="900"></div>
+
+</section>
+
+
+
+<!-- <section id="slide-problem-formulation1">
+	
+	<div>
+		Since time-varying attack may deteriorate all local states $\eta_i(k)$, we need a <strong>detection</strong> and <strong>reset</strong> mechanism.
+	</div>
+	<h3>Resilient Estimation</h3>
+			<div class="imgcontainer">
+				<p>
+					<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
+				</p>
+
+	</div>
+
+</section> -->
+
+
+<!-- <section id="sparse" class="center">
 
 	<div class="leftcol" style="width:50%;">
 		<h4 id=""><strong style="color:rgb(30, 30, 203);">Time-varying</strong> Sparse Attack</h4>
@@ -626,7 +732,7 @@ There are only 4 observability possibilities for one sensor:
 		</div>
 	</div>
 
-</section>
+</section> -->
 
 <section>
 	<h4 id="">Secure Estimation Algorithm </h4>
@@ -635,7 +741,7 @@ There are only 4 observability possibilities for one sensor:
 
 	<div style="font-size:30px; margin-top: 40%;">
 	Step 1: update local observer state.
-	$$\eta_i(k+1)=(\tilde{A}_i - L_i \tilde{C} ) \eta_i^+(k)+L_i y_i(k)$$
+	$$\tilde{x}^i(k+1)=(\tilde{A}_i - L_i \tilde{C} ) \tilde{x}^i_+ (k)+L_i y_i(k)$$
 	</div>
 </section>
 
@@ -648,7 +754,7 @@ There are only 4 observability possibilities for one sensor:
 	Step 2: For each state entry,  take median among all local states that can observe them.
 	<!-- $$\mathcal{F}_j\triangleq \{j|O_i \mathbf{e}_j \neq \mathbf{0}\}.$$ -->
 	</div>
-	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/med.png" width="800" height="200"></div>
+	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="650" height="200"></div>
 	
 </section>
 
@@ -661,7 +767,7 @@ There are only 4 observability possibilities for one sensor:
 	Step 3: Check compatibility of all those local estimates. 
 	<!-- $$\mathcal{F}_j\triangleq \{j|O_i \mathbf{e}_j \neq \mathbf{0}\}.$$ -->
 	</div>
-	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/med_check.png" width="800" height="200"></div>
+	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="650" height="200"></div>
 	
 </section>
 
@@ -715,19 +821,21 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	<h4 id="" style="margin-top: 1%">Main result on secure estimation (Theorem 2)</h4>
 
 	Assume the system is $2p$-sparse observable and the following two conditions hold:
-	<div>
+	<div style="margin-top: 3%;">
 	(1)
-	$\sigma_{\max}\left(\tilde{A}_i-L_i\tilde{C}_i\right)\leq \frac{\gamma-\mathcal{B}_w- \|L_i\|_2\mathcal{B}_v }{(2\sqrt{n_i}+1)\gamma}$ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$. 
+	$\sigma_{\max}\left(\tilde{A}_i-L_i\tilde{C}_i\right)\leq \frac{1}{2\sqrt{n_i}+1}$, $i=1,2,\cdots,m$. 
 </div>
-<div>
+<div style="margin-top: 3%;">
 	(2) The initial estimate satisfies $\|\hat{x}(0)-x(0)\|_\infty\leq \gamma$.
 </div>
+<div style="margin-top: 3%;">
 	Then our algorithm provides a secure state estimate $\hat{x}$ in the sense that
 	$$\|\hat{x}(k)-x(k)\|_\infty \leq \gamma,\quad \forall k\in\mathbb{Z}^+.$$
-	And good sensors at time $k$ will not trigger the detector at time $k+1$, i.e., $\forall i\notin\mathcal{C}(k)$,
+</div>
+	<!-- And good sensors at time $k$ will not trigger the detector at time $k+1$, i.e., $\forall i\notin\mathcal{C}(k)$,
 	$$
 		\|\eta_i(k+1)-H_i\hat{x}(k+1)\|_2\leq (\sqrt{n_i}+1)\gamma.
-	$$
+	$$ -->
 
 
 	<!-- <div style="font-size: 20pt;">
@@ -742,35 +850,33 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 
 <section id="Remark on Condition (1)" class="center" >
 	<h4 id="" >Remark on Condition (1)</h4>
-	<div style="margin-left: 20%">
-		$\sigma_{\max}\left(\tilde{A}_i-L_i\tilde{C}_i\right)\leq \frac{\gamma-\mathcal{B}_w- \|L_i\|_2\mathcal{B}_v }{(2\sqrt{n_i}+1)\gamma}$
+	<div style="margin-left: 0%">
+		$$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$$
 	</div>
 
-	<h4 id="" >Remark 1</h4>
-	<div style="font-size:30pt;">Since subsystem $(\tilde{A}_i,\tilde{C}_i)$ is observable, we can assign eigenvalues of $\tilde{A}_i-L_i\tilde{C}_i$ and thus control its maximum singular value to some extent.</div>
+	<h4 id="" >Remark</h4>
+	<div style="font-size:30pt;">This condition is less restrictive than 1-step $2p$-sparse observability, but more restrictive than $2p$-sparse observability.</div>
 
-	<h4 id="" style="margin-top: 2%;">Remark 2</h4>
-	One can always find $\gamma$ and $L_i$ such that Condition (1) holds <strong>if and only if</strong> the following holds for all $i$.
-	$$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1}.$$
-	
 
 </section>
 
 <section id="Remark on Condition (2)" class="center" > 
-	<h4 id="" >Remark on Condition (2)</h4>
+	<h4 id="" >Remark on the error bound</h4>
 	<div style="margin-left: 20%">
-	$\|\hat{x}(0)-x(0)\|_{\infty}\leq \gamma$
+	$\|\hat{x}(0)-x(0)\|_{\infty}\leq \gamma \Rightarrow \|\hat{x}(k)-x(k)\|_{\infty}$ 
 	</div>
 	<p style="font-size:40px;">
-	The initial estimation should be "accurate".
+	<!-- The initial estimation should be "accurate". -->
 	</p>
-	<h4 id="" >Theoretical Perspective </h4>
-	The result is <strong>non-trivial</strong> when the system is unstable, since the state estimate by pure prediction $\hat{x}(k)=A^k \hat{x}(0)$ has diverging error. Thus, a secure estimation algorithm must <strong>incorporate useful information from partly manipulated measurements</strong> and correct the state estimate to maintain a bounded error. 
+	<h4 style="margin-top: 5%;" >Theoretical Perspective </h4>
+	The result is <strong>non-trivial</strong> when the system is unstable
+	<!-- , since the state estimate by pure prediction $\hat{x}(k)=A^k \hat{x}(0)$ has diverging error. Thus, a secure estimation algorithm must <strong>incorporate useful information from partly manipulated measurements</strong> and correct the state estimate to maintain a bounded error.  -->
 	<h4 id="" style="margin-top: 2%;">Practical Perspective </h4>
-	The initial time $k=0$ is seen as the <strong>time when the attack is launched</strong> and an estimator has stable estimation already. Our proposed algorithm would not worsen the estimation error upper bound compared to when there is no attack.
+	The initial time $k=0$ is seen as the <strong>time when the attack is launched</strong> and operator switch from a classic estimator to our algorihtm.
+	<!-- an estimator has stable estimation already. Our proposed algorithm would not worsen the estimation error upper bound compared to when there is no attack. -->
 </section>
 
-<section id="Remark on result" class="center" > 
+<!-- <section id="Remark on result" class="center" > 
 	<h4 id="" >Remark on result</h4>
 	<div style="margin-left: 0%">
 		$$
@@ -782,7 +888,7 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	$\mathcal{A}(k+1)\supset \mathcal{G}(k) $ means that the our proposed detection algorithm has <strong>no false alarm</strong> or type-I error. Thus, no good sensor will be "wronged" and all benign local states $\eta_i(k+1)$, will be directly used in the fusion step at time $k+1$.
 	<h4 id="" >Possible miss detection </h4>
 	On the other hand, the detection algorithm may have miss detection or type-II error. Nevertheless, our proposed median based fusion  <strong>can tolerate</strong> the error introduced by undetected corrupted local states.
-</section>
+</section> -->
 
 
 <!-- <section id="Discussion" class="center" > 
