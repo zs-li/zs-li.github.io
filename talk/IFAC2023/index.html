@@ -326,9 +326,9 @@ There are only 4 observability possibilities for one sensor:
 
 </section>
 
-<section>
+<section id="Q1">
 	<div>
-	
+	<h4 id="">Local Observable Subspace</h4>
 
 	$$A=\begin{bmatrix}
 		\lambda_1 &0\\
@@ -342,29 +342,12 @@ There are only 4 observability possibilities for one sensor:
 	\end{bmatrix}.$$
 	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
 
-	$$
-	\begin{bmatrix}
-	1 &0 &1 &1\\
-	0 &1 &1& 1
-	\end{bmatrix}
-	$$
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q1.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+	</div>
 	
-	$$
-	\begin{aligned}
-	\tilde{A}_1=[\lambda_1] , \tilde{C}_1=1,\\
-	\tilde{A}_2=[\lambda_2] , \tilde{C}_2=1,\\
-	\tilde{A}_3=\begin{bmatrix}
-	\lambda_1 &0\\
-	0&\lambda_2
-\end{bmatrix} , \tilde{C}_3=[1\ 1],\\
-	\tilde{A}_4=\begin{bmatrix}
-	\lambda_1 &0\\
-	0&\lambda_2
-\end{bmatrix} , \tilde{C}_4=[1 \ 2],\\
-	\end{aligned}
-	$$
+	
 
-	<!-- Define the number of state entries sensor $i$ can observe as $n_i$. -->
 </div>
 
 
@@ -383,10 +366,95 @@ There are only 4 observability possibilities for one sensor:
 	
 </section>
 
+<section id="Q2">
+	<div>
+	<h4 id="">Local Observable Subspace</h4>
 
-<section>
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q2.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+	</div>
+	
+
+</div>
+</section>
+
+<section id="Q3">
+	<div>
+	<h4 id="">Local Observable Subspace</h4>
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q3.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+	</div>
+	
+
+</div>
+</section>
+
+<section id="Q4">
+	<div>
+	<h4 id="">Local Observable Subspace</h4>
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q4.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+	</div>
+	
+
+</div>
+</section>
+
+<!-- <section>
 
 	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	$$
+	\begin{aligned}
+	\tilde{A}_2=[\lambda_2] , \tilde{C}_2=1,\\
+	\tilde{A}_3=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix} , \tilde{C}_3=[1\ 1],\\
+	\tilde{A}_4=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix} , \tilde{C}_4=[1 \ 2],\\
+	\end{aligned}
+	$$
 	
 		$$A=\begin{bmatrix}
 		\lambda_1 &0\\
@@ -409,124 +477,13 @@ There are only 4 observability possibilities for one sensor:
 	$$
 	
 	
-	</section>
+	</section> -->
 
 
-
-
-<!-- <section>
-	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
-
-
-	<div class="leftcol" style="width:80%;">
-		<div style="margin-bottom: 47%;margin-left: 20%;" class="imgcontainer"><img src="./figures/decompose_obs_space.png" width="1800" height="1300"></div>
-			<div class="r-stack" style="margin-top: 0%;">
-				<span class="fragment fade-in" data-fragment-index="1">
-				<h4 id="" >Our idea: </h4>
-				
-					<strong style="color:rgb(0, 0, 0);"> construct local reduced order observer at each sensor and fuse them resiliently. </strong>
-				
-				</span>
-		</div> 
-	</div>
-
-</section> -->
-
-
-
-
-
-
-<!-- <section id="Information Flow of Our Proposed Estimator" class="center">
-
-	<div class="leftcol" style="width:50%;">
-		<div style="margin-bottom: 60%;" class="imgcontainer"><img src="./figures/raw/kalman.png" width="700" height="300"></div>
-		<div style="font-size:30px;">
-			$$
-			\hat{x}(k+1)=(A-KC)\hat{x}(k)+\sum_{i=1}^m K_i y_i(k).
-			$$
-		</div>
-	</div>
-	<div class="rightcol" style="width:50%;">
-		<div style="margin-bottom: 65%;" class="imgcontainer"><img src="./figures/raw/decompose_kalman.png" width="700" height="400"></div>
-		<div style="font-size:30px;">
-			$$
-			\eta_i(k+1)=\Lambda_i\eta_i(k) + L_i y_i(k).
-			$$
-		</div>
-	</div>
-	
-</section> -->
-
-
-
-
-<!-- <section>
-	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
-$$
-	\tilde{A}_1=\lambda_1,\; \tilde{C}_1=1,\quad \tilde{A}_2=\begin{bmatrix}
-		\lambda_2 & 1\\
-		0&\lambda_2
-	\end{bmatrix}, \; \tilde{C}_2=\begin{bmatrix}
-		1 &0
-	\end{bmatrix} $$
-
-	Formally, define
-	\begin{align}
-		\tilde{A_i}\triangleq H_i A H'_i ,\quad \tilde{C_i}\triangleq C_i H'_i 
-	\end{align} 
-	where $C_i$ is $i$-th row of matrix $C$. The dimension of the subsystem is denoted as $n_i$.
-
-	<h4 id="" >Corollary </h4> Pair $(\tilde{A_i},\tilde{C_i})$ is observable.
-</section> -->
-
-
-<!-- <section style="font-size: 24pt;">
-	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
-	
-		$$A=\begin{bmatrix}
-			\lambda_1 &0&0\\
-			0& \lambda_2 & 1\\
-			0&0&\lambda_2
-		\end{bmatrix}, \quad 
-		C=\begin{bmatrix}
-			1 &0&0\\
-			0&1&0\\
-			1 &0&0\\
-			0&1&1\\
-			1 &0&0\\
-			0&0&1
-		\end{bmatrix}.$$
-		
-		
-	$$\tilde{A}_1=\lambda_1,\; \tilde{C}_1=1,\quad \tilde{A}_2=\begin{bmatrix}
-		\lambda_2 & 1\\
-		0&\lambda_2
-	\end{bmatrix}, \; \tilde{C}_2=\begin{bmatrix}
-		1 &0
-	\end{bmatrix} \cdots $$
-
-	$$H_1=\begin{bmatrix}
-			1&0&0
-		\end{bmatrix}, \quad H_2=\begin{bmatrix}
-			0&1&0\\ 0&0&1
-		\end{bmatrix}, \cdots$$
-
-	<h4 id="" >$H_i$ is designed such that </h4>
-	\begin{align}
-		\tilde{A_i}\triangleq H_i A H'_i ,\quad \tilde{C_i}\triangleq C_i H'_i, \text{ and } (\tilde{A_i},\tilde{C_i}) \text{ is observable} 
-	\end{align}  -->
-	
-	<!-- $H_i$ transforms state $x$ into observable part at sensor $i$.
-
-	$$H_1[x_1,x_2,x_3]=x_1,\ H_2[x_1,x_2,x_3]=[x_2,x_3], \cdots$$ -->
-	<!-- $H_1$ transforms state $[x_1,x_2,x_3]$ into state $x_1$. $H_2$ transforms state $[x_1,x_2,x_3]$ into state $[x_2,x_3]$. -->
-
-<!-- </section> -->
 
 <section style="font-size: 20pt;">
 	<h4 id="">Example on Resilient Fusion</h4>
-	<div class="leftcol" style="margin-left: -1%;margin-right: 0%">
+	<!-- <div class="leftcol" style="margin-left: -1%;margin-right: 0%"> -->
 		<!-- $$A=\begin{bmatrix}
 		\lambda_1 &0\\
 		0&\lambda_2
@@ -544,19 +501,24 @@ $$
 	\end{bmatrix}, \; \tilde{C}_2=\begin{bmatrix}
 		1 &0
 	\end{bmatrix}, \cdots$$ -->
-	<div>
-		Construct 4 local observers :
-		$$\tilde{x}^1(k+1)=(\tilde{A}_1-L_1 \tilde{C}_1 )\tilde{x}^1(k)+L_1 y_1(k).$$
+	<div style="font-size: 35pt;">
+		<!-- Construct 4 local observers :
+		$$\tilde{x}^3(k+1)=(\tilde{A}_3-L_3 \tilde{C}_3 )\tilde{x}^3(k)+L_3 y_3(k).$$
 		$$\vdots$$
-		$$\tilde{x}^4(k+1)=(\tilde{A}_4-L_4 \tilde{C}_4 )\tilde{x}^4(k)+L_6 y_6(k).$$
-	
+		$$\tilde{x}^4(k+1)=(\tilde{A}_4-L_4 \tilde{C}_4 )\tilde{x}^4(k)+L_6 y_6(k).$$ -->
+	For 4 local observer states:
+	$$\tilde{x}^1\in\mathbb{R}^1,
+	\tilde{x}^2\in\mathbb{R}^2,
+	\tilde{x}^3\in\mathbb{R}^1,
+	\tilde{x}^4\in\mathbb{R}^2
+	$$
 	
 		
 	</div>
-</div>
-	
+<!-- </div> -->
+	Fuse those subsystems by taking median:
 
-<div class="rightcol" style="margin-left: -1%;margin-right: 0%;">
+<!-- <div class="rightcol" style="margin-left: -1%;margin-right: 0%;"> -->
 	
 
 	<!-- $$\hat{x}(k)=f(H_1^\top \eta_1(k), H_2^\top \eta_2(k))$$ -->
@@ -571,18 +533,17 @@ $$
 
 
 		<span class="fragment fade-in" data-fragment-index="1">
-			Fuse those subsystems by taking median:
-			<div style="margin-left: -20%; margin-right: -20%;" class="imgcontainer"><img src="./figures/med_before.png" width="1500" height="200"></div>
+			
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/med_before.png" width="1200" height="400"></div>
 		</span>
 
 		<span  class="fragment fade-in" data-fragment-index="2">
-			Fuse those subsystems by taking median:
-			<div style="margin-left: -20%; margin-right: -20%;" class="imgcontainer"><img src="./figures/med.png" width="1100" height="200"></div>
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/med.png" width="1200" height="400"></div>
 		</span>
 	</div>
 
 
-</div>
+<!-- </div> -->
 
 </section>
 
