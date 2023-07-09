@@ -304,11 +304,11 @@ There are only 4 observability possibilities for one sensor:
 	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
 
 	<h4 id="" >Assumption 1 </h4>
-	All the eigenvalues of matrix $A$ have geometric multiplicity 1.
+	All the eigenvalues of matrix $A$ have <strong>geometric multiplicity 1</strong>.
 
 
-	<h4 id="" >Theorem 1 </h4>
-	If Assumption 1 holds, the observable space of a sensor has a group of canonical basis vector. Thus, a sensor either can observe a state entry or not. $\square$
+	<h4 style="margin-top: 4%;" >Theorem 1 </h4>
+	If Assumption 1 holds, the observable space of a sensor has a group of canonical basis vector. Thus, a sensor either can observe a state entry or not. 
 
 	
 
@@ -327,11 +327,14 @@ There are only 4 observability possibilities for one sensor:
 	
 	</div>
 	
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Qdef.png" width="600" height="300" style="margin-top:-1%; margin-right:0%;">
+	</div>
+
 	<div>
 		Define sensor $i$'s observbale subsystem as $(\tilde{A_i}, \tilde{C_i})$ (linear system with $n_i$ states, 1 sensor)
 	</div>
-
-
 
 	<!-- <div style="font-size: 20pt;">
 
@@ -764,10 +767,18 @@ There are only 4 observability possibilities for one sensor:
 	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
 
 	<div style="font-size:30px; margin-top: 35%;">
-	Step 3: Check compatibility of all those local estimates. 
+	Step 3: Check compatibility of all those local estimates for each sensor $i$, state entry $j$:
 	<!-- $$\mathcal{F}_j\triangleq \{j|O_i \mathbf{e}_j \neq \mathbf{0}\}.$$ -->
 	</div>
-	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="650" height="200"></div>
+	<!-- <div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="650" height="200"></div> -->
+
+	$$
+	\tilde{x}^i_j:=
+\begin{cases}
+\tilde{x}^i_j, \text{ if } \|\tilde{x}^i-\hat{x}\|_2\leq (\sqrt{n_i}+1)\gamma \quad \textcolor{blue}{\rm (keeps\ the\ same) }\\
+\hat{x}_j, \text{ if } \|\tilde{x}^i-\hat{x}\|_2> (\sqrt{n_i}+1)\gamma \quad \textcolor{red}{\rm (reset) }
+\end{cases}
+	$$
 	
 </section>
 
@@ -849,7 +860,51 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 </section>
 
 <section id="Remark on Condition (1)" class="center" >
-	<h4 id="" >Remark on Condition (1)</h4>
+	<h4 id="" >Remark on observability requirements</h4>
+
+	<h5>$2p$-sparse observability</h5>
+	<li>System is still observable after removing arbitrary $s$ sensors.</li>
+
+	<h5 style="margin-top: 3%;">$1$ step $2p$-sparse observability</h5>
+	<li>$C$ is still full column rank after removing arbitrary $s$ sensors. </li>
+
+	<h5 style="margin-top: 3%;">Where is the fundamental limit?</h5>
+	<!-- $$2p\text{-sparse observability} > \text{Fundamental limit for time-varying sparse attack}  \geq  1 \text{ step }2p\text{-sparse observability}$$ -->
+	<p>
+		<img src="./figures/obs1.PNG" width="1400" height="350" style="margin-top:0%; margin-right:0%;">
+	</p>
+
+	<!-- <div style="margin-left: 0%">
+		$$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$$
+	</div>
+
+	<h4 id="" >Remark</h4>
+	<div style="font-size:30pt;">This condition is less restrictive than 1-step $2p$-sparse observability, but more restrictive than $2p$-sparse observability.</div> -->
+
+
+</section>
+
+<section id="Remark on Condition (1)" class="center" >
+	<h4 id="" >Remark on observability requirements</h4>
+
+	<h5>Ours observability condition</h5>
+	<div style="margin-left: 0%">
+		<li>$2p$-sparse observable</li> 
+		<li>
+		$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$
+	</li>
+	</div>
+
+	<p>
+		<img src="./figures/obs2.PNG" width="1400" height="350" style="margin-top:0%; margin-right:0%;">
+	</p>
+
+	
+
+</section>
+
+<!-- <section id="Remark on Condition (1)" class="center" >
+	<h4 id="" >Remark on observability requirements</h4>
 	<div style="margin-left: 0%">
 		$$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$$
 	</div>
@@ -858,7 +913,7 @@ with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$.
 	<div style="font-size:30pt;">This condition is less restrictive than 1-step $2p$-sparse observability, but more restrictive than $2p$-sparse observability.</div>
 
 
-</section>
+</section> -->
 
 <section id="Remark on Condition (2)" class="center" > 
 	<h4 id="" >Remark on the error bound</h4>
