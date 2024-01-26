@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Resilient Estimation Against Sparse Integrity Attack</title>
+<meta name="author" content="Zishuo Li 李子硕"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/dist/reveal.css"/>
+<link rel="stylesheet" href="./reveal.js/dist/theme/oer-reveal.css" id="theme"/>
+<link rel="stylesheet" href="./reveal.js/plugin/accessibility/helper.css"/>
+<link rel="stylesheet" href="./reveal.js/plugin/toc-progress/toc-progress.css"/>
+<link rel="stylesheet" href="./reveal.js/dist/theme/toc-style.css"/>
+<link rel="stylesheet" href="./reveal.js/dist/theme/fonts/source-sans-pro/source-sans-pro.css"/>
+<link rel="stylesheet" href="./reveal.js/plugin/mine/font-awesome.min.css">
+</head>
+<body prefix="dc: http://purl.org/dc/elements/1.1/ dcterms: http://purl.org/dc/terms/ dcmitype: http://purl.org/dc/dcmitype/ cc: http://creativecommons.org/ns#" typeof="dcmitype:InteractiveResource">
+	<style>
+		:root{
+			--myred: #981E32;
+		}
+		:root{
+			--myblue: #0582CA;
+		}
+	</style>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="sec-title-slide" data-state="no-toc-progress"  class="center">
+<!-- The following copyright information only applies to the title slide. -->
+<!-- SPDX-FileCopyrightText: 2017-2019 Jens Lechtenbörger -->
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+<!-- This is an HTML template for the title slide. -->
+<!-- Embed logos as necessary. -->
+<!-- <a class="nooutlink" href="url"><img class="state-background your-logo-class" src="whatever.png" alt="Whatever" /></a> -->
+
+<div class="talk-title">
+    <h2 class="no-toc-progress" style="text-align:center;">Secure State Estimation against Sparse Attacks on a Time-varying Set of Sensors</h2>
+</div>
+<div class="talk-subtitle">
+    <p style="font-size:40px;text-align:center;">
+	</p>
+</div>
+<div class="talk-author">
+  	<p style="font-size:40px;text-align:center;">
+	  Zishuo Li, Muhammad Umar B. Niazi, Changxin Liu, Yilin Mo, Karl H. Johansson
+	</p>
+	<p style="font-size:25px;text-align:center;">
+		<strong style="color:black;">Department of Automation, Tsinghua University, Beijing, China</strong>
+	</p>
+	<p style="font-size:25px;text-align:center;">
+		<strong style="color:black;">Division of Decision and Control Systems, Digital Futures, School of EECS, KTH, Stockholm, Sweden</strong>
+	</p>
+	<p style="font-size:25px;text-align:center;">
+		<strong style="color:black;">Laboratory for Information and Decision Systems, Massachusetts Institute of Technology, Cambridge, USA</strong>
+	</p>
+	
+</div>
+
+<div class="c-stack" style="margin-right: 35%; margin-top: -0%;">
+	<img src="./figures/raw/title/THU-KTH-MIT.png" width="500" height="150">
+</div>
+
+</section>
+
+
+
+<!--Background and intro-->
+
+<section id="slide-background" class="center">
+	<h2 id="Background and introduction" hidden>Background and introduction</h2>
+	<h4 id="h4_background1">BACKGROUND: Security Problem of Estimation</h4>
+
+	<div>
+		<p style="font-size:40px;">
+			<p style="text-align:center;font-size:28px;" style="margin-top: 8%;">
+				Safety Critical Industries 
+			</p>
+			<div class="r-stack">
+			
+					<img src="./figures/examples-en.png" width="1200" height="400">
+					
+				
+			</div>
+			<div>
+				<ul style="font-size:40px;">
+					<li>High safety requirements.</li>
+					<li>More vulnerable System</li>
+					<ul>
+						<li>Modern control systems are becoming more <strong>open</strong> to the cyber-world.</li>
+						<li>More <strong>complex threats</strong> on estimation algorithms.</li>	
+					</ul>
+						
+				
+				</ul>
+			</li>
+			</div>
+		</p>
+	</div>
+</section>
+
+
+<!-- <section>
+
+<h3>Threats:</h3> 
+
+<div class="r-stack">
+	<span class="fragment fade-out" data-fragment-index="1">
+		<h4>Malicious Attack:</h4>
+		<div class="imgcontainer">
+			<div about="" typeof="dcmitype:StillImage" class="figure">
+				<img src="./figures/stuxnet.jpg" width="700" height="600" style="margin-top:5%; margin-right:0%;">
+			</div>
+		</div>
+		<div style="margin-top: 0%;">Safety-concerned estimators helps defending malicious attack.</div>
+
+
+	</span>
+
+	<span class="fragment fade-in" data-fragment-index="1">
+		<span class="fragment fade-out" data-fragment-index="2">
+			<h4>Malfunctioning components:</h4>
+			<div class="imgcontainer">
+				<div about="" typeof="dcmitype:StillImage" class="figure">
+					<img src="./figures/boeing.jpg" width="1000" height="600" style="margin-top:5%; margin-right:0%;">
+				</div>
+			</div>
+
+		<div style="margin-top: 0%;">Safety-concerned estimators helps reliability management.</div>
+	</span>
+
+
+	</span>
+	<span class="fragment fade-in" data-fragment-index="2">
+		<h4>Diverse environment:</h4>
+		<div class="imgcontainer">
+			<div about="" typeof="dcmitype:StillImage" class="figure">
+				<img src="./figures/lidar_incons.jpg" width="700" height="600" style="margin-top:5%; margin-right:0%;">
+			</div>
+		</div>
+
+		<div style="margin-top: 0%;">Safety-concerned estimators helps adapt to the environment.</div>
+	</span>
+</div>
+</section> -->
+
+<section id="slide-problem-formulation">
+	<h3>Resilient Estimation against sparse attack</h3>
+	<div>	
+		<strong>$p$ sparse attack:</strong>
+		The corrupted sensor set $\mathcal{C}$ satisfies $|\mathcal{C}| \leq p,\ \forall k$.</div>
+
+		<div class="imgcontainer">
+				<p>
+					<img data-src="figures/static_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
+				</p>
+		</div>
+
+</section>
+
+<section id="slide-problem-formulation1">
+	<h3>Resilient Estimation against time-varying sparse attack</h3>
+	<div>	
+		<strong>Time-varying $p$ sparse attack:</strong>
+		The corrupted sensor set $\mathcal{C}(k)$ satisfies $|\mathcal{C}(k)| \leq p,\ \forall k$.</div>
+
+	<div class="imgcontainer">
+		<p>
+			<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
+		</p>
+	</div>
+
+</section>
+
+<!-- <section id="slide-problem-formulation1"> -->
+	
+
+
+		<!-- <p> -->
+			<!-- <img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%;margin-bottom:4%; max-height:60vh" /> -->
+		<!-- </p> -->	
+
+<!-- </section> -->
+
+
+<section class="center">
+	<h3 id="h3_problem_formulation" hidden>Problem formulation</h3>
+	<h4 id="h4_problem-formulation">Problem Formulation</h4>
+	<div class="outline-text-2" data-id="text-kf">
+	</div>
+	<ul style="font-size:30px;">
+	<li> System equation and measurement equation:
+		<p style="font-size:25px;">
+			$$
+			x(k+1)=Ax(k)+w(k),
+			$$
+		</p>
+		<p style="font-size:25px;">
+			$$
+				y(k)=Cx(k)+v(k)+a(k),
+			$$
+		</p>
+	</li>
+	where $x(k)\in{\color{var(--myred)}{\mathbb{R}^n}}$, and 
+	 <p style="font-size:25px;">
+		$$
+		y(k)\triangleq \begin{bmatrix}
+			y_1(k)\\
+			\vdots\\
+			y_m(k)
+		\end{bmatrix}\in {\color{var(--myred)}\mathbb{R}^m}, C\triangleq \begin{bmatrix}
+			C_1\\
+			\vdots\\
+			C_m
+		\end{bmatrix}, 
+		a(k)\triangleq \begin{bmatrix}
+			a_1(k)\\
+			\vdots\\
+			a_m(k)
+		\end{bmatrix}
+		$$
+	</p>
+
+	<li> Measurement equation of sensor $i$:
+		<p style="font-size:25px;">
+			$$
+				y_i(k)=C_ix(k)+v_i(k)+a_i(k).
+			$$
+		</p>
+	</li>
+	<li>process noise $w(k)$ and measurement noise $v(k)$ are bounded: $\|w(k)\|_2\leq\mathcal{B}_w $, $\|v(k)\|_2\leq\mathcal{B}_v $.</li>
+	<li> <strong><em style="color:var(--myred);">$(A,C)$ is observable</em></strong>. Note that <strong><em style="color:var(--myred);">$(A, C_i)$ is not necessarily observable</em></strong>.</li>
+	
+	<li><strong>Target</strong> : $\|\hat{x}(k)-x(k)\|\leq \text{Constant}$ for all admissable attacks. (Consider unstable $A$ for non-trivial.)</li>
+</ul>
+</section>
+
+
+<section>
+	<h3 id="">Decomposition-Fusion</h3>
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/raw/decompose_kalman.png" width="600" height="400" style="margin-top:1%; margin-right:0%;">
+	</div>
+
+	<!-- talk/IFAC2023/figures/raw/decompose_kalman.png -->
+
+	
+</section>
+
+
+<section style="font-size: 28pt;">
+	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	$$A=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix}, \quad 
+C=\begin{bmatrix}
+	1 &0\\
+	0&1\\
+	1 &1\\
+	1&2
+\end{bmatrix}.$$
+
+<!-- Recall that the unobservable space w.r.t. sensor $i$ is ${\rm ker} O_i$ . The observable space  w.r.t. sensor $i$ is $({\rm ker} O_i)^\perp=\rowspan $ as the linear space that  -->
+
+<li style="margin-left: -5%;">Define that the observable space  w.r.t. sensor $i$ as $$\mathbb{O}_i\triangleq {\rm span} \{C_i^\top , (C_i A)^\top, \cdots, (C_i A^{n-1})^\top \}.$$</li>
+
+<li style="margin-left: -5%;">
+We find that 
+$\mathbb{O}_1={\rm span}\{e_1\}, \mathbb{O}_2={\rm span}\{e_2\},\mathbb{O}_3={\rm span}\{e_1, e_2\}, \mathbb{O}_4={\rm span}\{e_1, e_2\} $, 
+where <div style="margin-top: -1%;">$$e_1\triangleq \begin{bmatrix}1& 0\end{bmatrix}^\top , e_2\triangleq \begin{bmatrix}0& 1\end{bmatrix}^\top $$</div>
+</li>
+
+
+<!-- <li>The $j$-th entry of state $x$ can be observed by sensor $i$ if $e_j\in \mathbb{O}_i$, where $$e_j\triangleq \begin{matrix}[0 &\cdots &0 &\underbrace{1}_{j\text{-th entry}} &0 &\cdots &0]\end{matrix}^\top$$ </li> -->
+
+
+
+	<!-- with the following Assumption
+
+	Only finite possibilities
+
+	would not happen that can observe x1+x2 nut not x1 x2 individually
+
+	In general, checking the observability relationship is NP hard. But with the Assumption, it can be done in poly time. -->
+	
+
+
+</section>
+
+<section>
+
+<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	$$A=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix}, \quad 
+C=\begin{bmatrix}
+	1 &0\\
+	0&1\\
+	1 &1\\
+	1&2
+\end{bmatrix}.$$
+
+<div style="margin-top: -5%;">We find:</div>
+
+<li>Sensor 1 can observe state entry 1.</li> 
+
+<li>Sensor 2 can observe state entry 2.</li> 
+
+<li>Sensor 3 can observe state entry 1,2.</li> 
+
+<li>Sensor 4 can observe state entry 1,2.</li> 
+
+<div style="margin-top: 2%;">
+There are only 4 observability possibilities for one sensor:
+</div>
+
+<div>
+(1) Can observe no entry. (2) Can observe entry 1. 
+</div>
+<div>
+(3) Can observe entry 2. (4) Can observe entry 1,2.
+</div>
+
+</section>
+
+<section>
+	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	<h4 id="" >Assumption 1 </h4>
+	All the eigenvalues of matrix $A$ have <strong>geometric multiplicity 1</strong>.
+
+
+	<h4 style="margin-top: 4%;" >Theorem 1 </h4>
+	If Assumption 1 holds, the observable space of a sensor has a group of <strong>canonical basis vector</strong>. Thus, a sensor either can observe a state entry or not. 
+	<div class="r-stack">
+		<span class="fragment fade-in" data-fragment-index="1">
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/geo_mul.png" width="500" height="230" style="margin-top:0%; margin-right:0%;">
+	</div>
+	</span>
+
+	<p style="font-size: 20pt; margin-top: 20%;">[1]Mao, Y., Mitra, A., Sundaram, S., and Tabuada, P. (2022). On the computational complexity of the secure state-reconstruction problem. Automatica, 136, 110083.</p>
+
+	<!-- Also seen in median based dis solver paper -->
+
+</div>
+
+</section>
+
+
+<section id="Q0">
+
+	<div style="margin-top: 5%;">Define the observability relationship matrix $\mathcal{Q}$ is constructed by
+		$$
+		[\mathcal{Q}]_{i,j}=\begin{cases}
+		0, e_j\notin \mathbb{O}_i\\
+		1, e_j\in \mathbb{O}_i
+		\end{cases}.\qquad 
+		$$
+	
+	</div>
+	
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Qdef.png" width="600" height="300" style="margin-top:-1%; margin-right:0%;">
+	</div>
+
+	<div>
+		Define sensor $i$'s reduced-order subsystem as $(\tilde{A_i}, \tilde{C_i})$, it is observable. (linear system with $n_i$ states, 1 sensor)
+	</div>
+
+
+
+	<!-- <div style="font-size: 20pt;">
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+</div> -->
+
+	<!-- <div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q1.png" width="650" height="300" style="margin-top:-1%; margin-right:0%;">
+	</div> -->
+	
+	
+
+
+</section>
+
+<section id="Q1">
+	<div>
+	<h4 id="">Local Observable Subspace</h4>
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q1.png" width="650" height="300" style="margin-top:-1%; margin-right:0%;">
+	</div>
+	
+	
+
+</div>
+
+
+	<!-- The matrix $H_i$ defined as follows satisfy that for any $x\in\mathbb{O}$, $H'_i H_i x=x$ if $x\in\mathbb{O}_i$, and $H'_i H_i x=\mathbf{0}$ if $x\in\mathbb{O}\setminus\mathbb{O}_i$. -->
+
+	<!-- Moreover, if Assumption 1 holds, $H_i$ can be constructed as the following $n_i\times n$ matrix: -->
+			<!-- \begin{align}\label{eq:defH}
+				H_i = 
+				\begin{bmatrix}
+					\mathbf{e}_{j_1}& \mathbf{e}_{j_2}& \cdots &\mathbf{e}_{j_{n_i}}
+				\end{bmatrix}^\top
+			\end{align}
+			where $\{j_1,\cdots,j_{n_i}\}=\mathcal{Q}_i$ with $\mathcal{Q}_i\triangleq \{j=1,\cdots,n\ |\ O_i \mathbf{e}_j\neq \mathbf{0} \}.$
+			<div style="margin-top: 5%;"></div>
+			Moreover, $\tilde{A_i}\triangleq H_i A H'_i ,\ \tilde{C_i}\triangleq C_i H'_i, \text{ and } (\tilde{A_i},\tilde{C_i})$ is <strong>observable</strong> -->
+	
+</section>
+
+<section id="Q2">
+	<div>
+	<h4 id="">Local Observable Subspace</h4>
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q2.png" width="650" height="300" style="margin-top:-1%; margin-right:0%;">
+	</div>
+	
+
+</div>
+</section>
+
+<section id="Q3">
+	<div>
+	<h4 id="">Local Observable Subspace</h4>
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q3.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+	</div>
+	
+
+</div>
+</section>
+
+<section id="Q4">
+	<div>
+	<h4 id="">Local Observable Subspace</h4>
+
+	$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/Q4.png" width="700" height="350" style="margin-top:-1%; margin-right:0%;">
+	</div>
+	
+
+</div>
+</section>
+
+<!-- <section>
+
+	<h4 id="">Preliminaries on Local Observable Subspace Decomposition</h4>
+
+	$$
+	\begin{aligned}
+	\tilde{A}_2=[\lambda_2] , \tilde{C}_2=1,\\
+	\tilde{A}_3=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix} , \tilde{C}_3=[1\ 1],\\
+	\tilde{A}_4=\begin{bmatrix}
+	\lambda_1 &0\\
+	0&\lambda_2
+\end{bmatrix} , \tilde{C}_4=[1 \ 2],\\
+	\end{aligned}
+	$$
+	
+		$$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$
+
+	The observability relationship is recorded in a 0-1 Matrix $\mathcal{Q}$:
+
+	$$
+	\begin{bmatrix}
+	1 &0 &1 &1\\
+	0 &1 &1& 1
+	\end{bmatrix}
+	$$
+	
+	
+	</section> -->
+
+
+
+<section style="font-size: 20pt;">
+	<h2 id="">Example on Resilient Fusion</h4>
+	<!-- <div class="leftcol" style="margin-left: -1%;margin-right: 0%"> -->
+		<!-- $$A=\begin{bmatrix}
+		\lambda_1 &0\\
+		0&\lambda_2
+	\end{bmatrix}, \quad 
+	C=\begin{bmatrix}
+		1 &0\\
+		0&1\\
+		1 &1\\
+		1&2
+	\end{bmatrix}.$$ -->
+		
+	<!-- $$\tilde{A}_1=\lambda_1,\; \tilde{C}_1=1,\quad \tilde{A}_2=\begin{bmatrix}
+		\lambda_2 & 1\\
+		0&\lambda_2
+	\end{bmatrix}, \; \tilde{C}_2=\begin{bmatrix}
+		1 &0
+	\end{bmatrix}, \cdots$$ -->
+	<div style="font-size: 32pt;">
+		<!-- Construct 4 local observers :
+		$$\tilde{x}^3(k+1)=(\tilde{A}_3-L_3 \tilde{C}_3 )\tilde{x}^3(k)+L_3 y_3(k).$$
+		$$\vdots$$
+		$$\tilde{x}^4(k+1)=(\tilde{A}_4-L_4 \tilde{C}_4 )\tilde{x}^4(k)+L_6 y_6(k).$$ -->
+	For 4 local observer states:
+	$$\tilde{x}^1\in\mathbb{R}^1,
+	\tilde{x}^2\in\mathbb{R}^2,
+	\tilde{x}^3\in\mathbb{R}^1,
+	\tilde{x}^4\in\mathbb{R}^2
+	$$
+	
+		
+	</div>
+	<div style="font-size: 32pt;">
+	Fuse those subsystems by taking median:
+	
+</div>
+
+	<div class="r-stack">
+
+
+		<span class="fragment fade-in" data-fragment-index="1">
+			
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med.png" width="800" height="260"></div>
+		</span>
+
+		<span  class="fragment fade-in" data-fragment-index="2">
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med1.png" width="800" height="260"></div>
+		</span>
+
+		<span  class="fragment fade-in" data-fragment-index="3">
+			<div style="margin-left: -20%; margin-right: -0%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="800" height="260"></div>
+		</span>
+	</div>
+
+
+<!-- </div> -->
+
+</section>
+
+<section id="inter-result1">
+	<h4 id="">Secure Estimation Algorithm against static sparse attack</h4>
+
+	<h4 id="" style="margin-top: 1%">Lemma 1</h4>
+
+	<!-- <div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div> -->
+
+	<!-- $$[\hat{x}(k)]_j={\rm med}\left\{[H_i^\top \eta_i(k)]_j, j\in\mathcal{Q}_i\right\}$$ -->
+
+	<div style="font-size:40px; margin-top: 0%;">
+	If the system is $2p$ sparse observable, then $\hat{x}(k)$ above has uniformly bounded error under <strong>static sparse attack</strong> where ${\rm supp} \{a(k)\}\subset \mathcal{C}$.
+	</div>
+
+	$$
+	\|\hat{x}(k)-x(k)\|_\infty\leq {\rm Constant}\qquad \qquad \qquad \quad$$
+
+
+	<p style="font-size: 30pt; margin-top: 20%;">
+		<strong>$2p$ sparse observable:</strong> System is still observable after removing arbitrary $2p$ sensors.
+	</p>
+
+</section>
+
+<section id="inter-result2">
+	<h4 id="">Secure Estimation Algorithm against static sparse attack</h4>
+
+	<h4 id="" style="margin-top: 1%">Lemma 1</h4>
+
+	<!-- <div style="margin-top: -0%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div> -->
+
+	<!-- $$[\hat{x}(k)]_j={\rm med}\left\{[H_i^\top \eta_i(k)]_j, j\in\mathcal{Q}_i\right\}$$ -->
+
+	<div style="font-size:40px; margin-top: 0%;">
+	If the system is $2p$ sparse observable, then $\hat{x}(k)$ above has uniformly bounded error under <strong>static sparse attack</strong> where ${\rm supp} \{a(k)\}\subset \mathcal{C}$.
+	</div>
+
+	$$
+	\|\hat{x}(k)-x(k)\|_\infty\leq {\rm Constant}(\mathcal{B}_w,\mathcal{B}_v,A,C,L_i) $$
+
+	<p style="font-size: 30pt; margin-top: 20%;">
+		<strong>$2p$ sparse observable:</strong> System is still observable after removing arbitrary $2p$ sensors.
+	</p>
+
+	
+</section>
+
+
+
+
+
+<section id="static attack works1">
+
+	<h4 id="" style="margin-top: 1%">Result under attack on fixed set</h4>
+
+	<div style="margin-top: 10%; margin-left: 0%; margin-right: 0%;" class="imgcontainer"><img src="./figures/local_states_static.png" width="1100" height="600"></div>
+
+</section>
+
+<section id="static attack works2">
+
+	<h4 id="" style="margin-top: 1%">Result under attack on fixed set</h4>
+
+	<div style="margin-top: 10%; margin-left: 0%; margin-right: 0%;" class="imgcontainer"><img src="./figures/local_states_static1.png" width="1100" height="600"></div>
+
+</section>
+
+<section id="static attack works3">
+
+	<h4 id="" style="margin-top: 1%">Result under attack on fixed set</h4>
+
+	<div style="margin-top: 10%; margin-left: 0%; margin-right: 0%;" class="imgcontainer"><img src="./figures/local_states_static2.png" width="1100" height="600"></div>
+
+</section>
+
+
+<!-- 
+<section id="slide-problem-formulation1">
+	
+
+	<h3 style="margin-top: -0%;">What about time-varying corrupted sensor set?</h3>
+
+
+	<div>	
+		<strong>Time-varying $p$ sparse attack:</strong>
+		The corrupted sensor set $\mathcal{C}(k)$ satisfies $|\mathcal{C}(k)| \leq p,\ \forall k$.</div>
+
+			<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%;margin-bottom:4%; max-height:60vh" />
+
+	<div> </div>
+
+
+</section> -->
+
+
+<section id="varying attack not works1">
+
+	<h4 id="" style="margin-top: 1%">What about time-varying corrupted sensor set?</h4>
+
+	<div style="margin-top: 1%; margin-left: -20%; margin-right: 20%;" class="imgcontainer"><img src="./figures/local_states_vary_attack.png" width="900" height="900"></div>
+
+</section>
+	
+
+<section id="varying attack not works2">
+
+	<h4 id="" style="margin-top: 1%">What about time-varying corrupted sensor set?</h4>
+
+	<div style="margin-top: 1%; margin-left: -0%; margin-right: 10%;" class="imgcontainer"><img src="./figures/local_states_vary1.png" width="1100" height="900"></div>
+
+</section>
+
+
+
+<!-- <section id="slide-problem-formulation1">
+	
+	<div>
+		Since time-varying attack may deteriorate all local states $\eta_i(k)$, we need a <strong>detection</strong> and <strong>reset</strong> mechanism.
+	</div>
+	<h3>Resilient Estimation</h3>
+			<div class="imgcontainer">
+				<p>
+					<img data-src="figures/time_vary_attack.png" alt="Figure" style="margin-top:0%; max-height:200vh" />
+				</p>
+
+	</div>
+
+</section> -->
+
+
+<!-- <section id="sparse" class="center">
+
+	<div class="leftcol" style="width:50%;">
+		<h4 id=""><strong style="color:rgb(30, 30, 203);">Time-varying</strong> Sparse Attack</h4>
+		Define the possible corrupted sensor set as $\mathcal{C}(k)\triangleq \text{supp}\left\{a(k)\right\}$.
+		The attack is called a $p$-sparse attack if $|\mathcal{C}(k)| \leq p,\ \forall k$.
+		
+		<li style="font-size:30px;margin-top: 5%;">
+		The corrupted sensor set is <strong style="color:rgb(30, 30, 203);">time-varying</strong> and has know maximum cardinality.
+		</li>
+	</div>
+	<div class="rightcol" style="width:50%;">
+		<div class="fragment fade-in" data-fragment-index="2" >
+			<h4 id="">Sparse Observability</h4>
+			System $(A,C)$ is $s$-sparse observable if  system $(A,C_{\mathcal{I}\setminus\mathcal{S}})$ is observable
+		 for any set of sensors $\mathcal{S}$ with cardinality $|\mathcal{S}| = s$.
+			<li style="font-size:30px;margin-top: 5%;">
+				System is still observable after removing arbitrary $s$ sensors.
+			</li>
+		</div>
+		
+	</div>
+	<div class="fragment fade-in" data-fragment-index="1" >
+		<div class="imgcontainer">
+			<p>
+				<img data-src="figures/Challenge_no_info.png" alt="Figure" style="margin-top:3%; max-height:100vh" />
+			</p>
+		</div>
+	</div>
+
+</section> -->
+
+<section>
+	<h4 id="">Secure Estimation Algorithm </h4>
+
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo_step1.png" width="1800" height="1800"></div>
+
+	<div style="font-size:30px; margin-top: 40%;">
+	Step 1: update local observer state.
+	$$\tilde{x}^i(k+1)=(\tilde{A}_i - L_i \tilde{C} ) \tilde{x}^i_+ (k)+L_i y_i(k)$$
+	</div>
+</section>
+
+<section>
+	<h4 id="">Secure Estimation Algorithm</h4>
+
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo_step2.png" width="1800" height="1200"></div>
+
+	<div style="font-size:30px; margin-top: 35%;">
+	Step 2: For each state entry,  take median among all local states that can observe them.
+	<!-- $$\mathcal{F}_j\triangleq \{j|O_i \mathbf{e}_j \neq \mathbf{0}\}.$$ -->
+	</div>
+	<div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="650" height="200"></div>
+	
+</section>
+
+<section>
+	<h4 id="">Secure Estimation Algorithm</h4>
+
+	<div style="margin-top: -0%;margin-left: -10%;margin-right: -10%;margin-bottom: -10%;" class="imgcontainer"><img src="./figures/algo.png" width="1800" height="1200"></div>
+
+	<div style="font-size:30px; margin-top: 35%;">
+	Step 3: Check compatibility of all those local estimates for each sensor $i$, state entry $j$:
+	<!-- $$\mathcal{F}_j\triangleq \{j|O_i \mathbf{e}_j \neq \mathbf{0}\}.$$ -->
+	</div>
+	<!-- <div style="margin-right: 20%;" class="imgcontainer"><img src="./figures/four_states_med3.png" width="650" height="200"></div> -->
+
+	$$
+	\tilde{x}^i_j:=
+\begin{cases}
+\tilde{x}^i_j, \text{ if } \|\tilde{x}^i-\hat{x}\|_2\leq (\sqrt{n_i}+1)\gamma \quad \textcolor{blue}{\rm (keeps\ the\ same) }\\
+\hat{x}_j, \text{ if } \|\tilde{x}^i-\hat{x}\|_2> (\sqrt{n_i}+1)\gamma \quad \textcolor{red}{\rm (reset) }
+\end{cases}
+	$$
+	
+</section>
+
+<!-- <section id="" class="center" style="font-size: 26t;">
+	<h4 id="" style="margin-top: 1%">Assumption 1</h4>
+	<li>
+		The matrix $A$ is in Jordan canonical form.
+	</li>
+	<li>
+		The matrix $A − KC$ and matrix $A$ do not share any eigenvalue.
+	</li>
+	<h4 id="" style="margin-top: 1%">Remark</h4>
+	<li>
+		We can freely assign the poles of $A-KC$ by choosing a proper gain $K$ since $(A,C)$ is observable. Hence, $A-KC$ can always satisfy Assumption 1.
+	</li>
+</section> -->
+
+<!-- <section id="" class="center">
+	<h4 id="">From Linear Combination to Resilient Fusion</h4>
+	<ul>The linear combination is not safe since one corrupted $\zeta_i$ may corrupt the $\tilde{x}$.</ul>
+
+<div class="imgcontainer">
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/dis_flow2.png" width="800" height="500" style="margin-top:5%; margin-right:20%;">
+	</div>
+</div>
+
+	<ul>
+	We replace the linear combination to a resilient fusion scheme. 
+	</ul>
+</section> -->
+
+<!-- <section id="" class="center">
+	<h4 id="" style="margin-top: 1%">Convergence Proof (Theorem 2)</h4>
+
+	Assume for each sensor $i$, estimator gain $L_i$ and detector parameter $\gamma$ satisfy the following inequality:
+	$$\sigma_{\max}\left(\tilde{A}_i-L_i\tilde{C}_i\right)\leq \frac{\gamma-\mathcal{B}_w- \|L_i\|_2\mathcal{B}_v }{(2\sqrt{n_i}+1)\gamma}$$
+with $\gamma\geq\mathcal{B}_w+ \|L_i\|_2\mathcal{B}_v$. 
+	Then
+	$$|\mathcal{A}(k)|\geq m-p \Rightarrow \|\hat{x}(k)-x(k)\|_\infty \Rightarrow  |\mathcal{A}(k+1)|\geq m-p .$$
+	where
+	<div style="font-size: 25pt;">
+	$\text{Accurate sensor set: }\mathcal{A}(k)\triangleq \{\ i\in\{ 1,\cdots,m\} \ \left| \ \|\eta_i(k)-H_ix(k)\|_{2}\leq \gamma \right. \} .$
+</div> -->
+<!-- <div style="font-size: 25pt;" >
+	$\text{Good sensor set: } \mathcal{G}(k)\triangleq \mathcal{I}\setminus \mathcal{C}(k).$
+</div> -->
+<!-- </section> -->
+
+<section id="" class="center">
+	<h4 id="" style="margin-top: 1%">Main result on secure estimation (Theorem 2)</h4>
+
+	Assume the system is $2p$-sparse observable and the following two conditions hold:
+	<div style="margin-top: 3%;">
+	(1)
+	$\sigma_{\max}\left(\tilde{A}_i-L_i\tilde{C}_i\right)\leq \frac{1}{2\sqrt{n_i}+1}$, $i=1,2,\cdots,m$. 
+</div>
+<div style="margin-top: 3%;">
+	(2) The initial estimate satisfies $\|\hat{x}(0)-x(0)\|_\infty\leq \gamma$.
+</div>
+<div style="margin-top: 3%;">
+	Then our algorithm provides a secure state estimate $\hat{x}$ in the sense that
+	$$\|\hat{x}(k)-x(k)\|_\infty \leq \gamma,\quad \forall k\in\mathbb{Z}^+.$$
+</div>
+	<!-- And good sensors at time $k$ will not trigger the detector at time $k+1$, i.e., $\forall i\notin\mathcal{C}(k)$,
+	$$
+		\|\eta_i(k+1)-H_i\hat{x}(k+1)\|_2\leq (\sqrt{n_i}+1)\gamma.
+	$$ -->
+
+
+	<!-- <div style="font-size: 20pt;">
+	The proof is based on mathematical induction.
+	
+	<div><strong>Condition (1)</strong>: the local estimator is stable enough.</div>
+
+	<div><strong>Condition (2)</strong>: The estimation error $\|\hat{x}(k)-x(k)\|_\infty$ is not worse than initial estimation error $\|\hat{x}(0)-x(0)\|_\infty$ under a time-varying set of compromised sensors.
+	</div>
+	</div> -->
+</section>
+
+<section id="Remark on Condition (1)" class="center" >
+	<h4 id="" >Remark on observability requirements</h4>
+
+	<h5>$2p$-sparse observability</h5>
+	<li>System is still observable after removing arbitrary $s$ sensors.</li>
+
+	<h5 style="margin-top: 3%;">$1$ step $2p$-sparse observability</h5>
+	<li>$C$ is still full column rank after removing arbitrary $s$ sensors. </li>
+
+	<h5 style="margin-top: 3%;">Where is the fundamental limit?</h5>
+	<!-- $$2p\text{-sparse observability} > \text{Fundamental limit for time-varying sparse attack}  \geq  1 \text{ step }2p\text{-sparse observability}$$ -->
+	<p>
+		<img src="./figures/obs1.PNG" width="1400" height="270" style="margin-top:-4%; margin-right:0%;">
+	</p>
+	<p style="font-size: 20pt; margin-top: 16%;">[2]Nakahira, Y. and Mo, Y. (2018). Attack-resilient H2, H$\infty$, and $\ell 1$ state estimator. IEEE Transactions on Automatic Control, 63(12), 4353–4360.</p>
+<p style="font-size: 20pt; margin-top: -1%;">[3]X. He, X. Ren, H. Sandberg and K. H. Johansson, "How to Secure Distributed Filters Under Sensor Attacks," in IEEE Transactions on Automatic Control, vol. 67, no. 6, pp. 2843-2856.</p>
+
+	<!-- <div style="margin-left: 0%">
+		$$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$$
+	</div>
+
+	<h4 id="" >Remark</h4>
+	<div style="font-size:30pt;">This condition is less restrictive than 1-step $2p$-sparse observability, but more restrictive than $2p$-sparse observability.</div> -->
+
+
+</section>
+
+<section id="Remark on Condition (1)1" class="center" >
+	<h4 id="" >Remark on observability requirements</h4>
+
+	<h5>Ours observability condition</h5>
+	<div style="margin-left: 0%">
+		<li>$2p$-sparse observable</li> 
+		<li>
+		$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$
+	</li>
+	</div>
+
+	<p>
+		<img src="./figures/obs2.PNG" width="1400" height="270" style="margin-top:0%; margin-right:0%;">
+	</p>
+	<p style="font-size: 20pt; margin-top: 22%;">[2]Nakahira, Y. and Mo, Y. (2018). Attack-resilient H2, H$\infty$, and $\ell 1$ state estimator. IEEE Transactions on Automatic Control, 63(12), 4353–4360.</p>
+	<p style="font-size: 20pt; margin-top: -1%;">[3]X. He, X. Ren, H. Sandberg and K. H. Johansson, "How to Secure Distributed Filters Under Sensor Attacks," in IEEE Transactions on Automatic Control, vol. 67, no. 6, pp. 2843-2856.</p>
+
+	
+
+</section>
+
+<!-- <section id="Remark on Condition (1)" class="center" >
+	<h4 id="" >Remark on observability requirements</h4>
+	<div style="margin-left: 0%">
+		$$\min_{L_i} \sigma_{\max}(\tilde{A}_i-L_i\tilde{C}_i)<\frac{1}{2\sqrt{n_i}+1},\ i=1,2,\cdots,m$$
+	</div>
+
+	<h4 id="" >Remark</h4>
+	<div style="font-size:30pt;">This condition is less restrictive than 1-step $2p$-sparse observability, but more restrictive than $2p$-sparse observability.</div>
+
+
+</section> -->
+
+<section id="Remark on Condition (2)" class="center" > 
+	<h4 id="" >Remark on the error bound</h4>
+	<div style="margin-left: 20%">
+	$\|\hat{x}(0)-x(0)\|_{\infty}\leq \gamma \Rightarrow \|\hat{x}(k)-x(k)\|_{\infty}\leq \gamma$ 
+	</div>
+	<p style="font-size:40px;">
+	<!-- The initial estimation should be "accurate". -->
+	</p>
+	<h4 style="margin-top: 5%;" >Theoretical Perspective </h4>
+	The result is <strong>non-trivial</strong> when the system is unstable
+	<!-- , since the state estimate by pure prediction $\hat{x}(k)=A^k \hat{x}(0)$ has diverging error. Thus, a secure estimation algorithm must <strong>incorporate useful information from partly manipulated measurements</strong> and correct the state estimate to maintain a bounded error.  -->
+	<h4 id="" style="margin-top: 2%;">Practical Perspective </h4>
+	The initial time $k=0$ is seen as the <strong>time when the attack is launched</strong> and operator switch from a classic estimator to our algorihtm.
+	<!-- an estimator has stable estimation already. Our proposed algorithm would not worsen the estimation error upper bound compared to when there is no attack. -->
+</section>
+
+<!-- <section id="Remark on result" class="center" > 
+	<h4 id="" >Remark on result</h4>
+	<div style="margin-left: 0%">
+		$$
+			\|\eta_i(k+1)-H_i\hat{x}(k+1)\|_2\leq (\sqrt{n_i}+1)\gamma, \forall i\notin\mathcal{C}(k).
+		$$
+	</div>
+
+	<h4 id="" >No false alarm</h4>
+	$\mathcal{A}(k+1)\supset \mathcal{G}(k) $ means that the our proposed detection algorithm has <strong>no false alarm</strong> or type-I error. Thus, no good sensor will be "wronged" and all benign local states $\eta_i(k+1)$, will be directly used in the fusion step at time $k+1$.
+	<h4 id="" >Possible miss detection </h4>
+	On the other hand, the detection algorithm may have miss detection or type-II error. Nevertheless, our proposed median based fusion  <strong>can tolerate</strong> the error introduced by undetected corrupted local states.
+</section> -->
+
+
+<!-- <section id="Discussion" class="center" > 
+	<h4 id="" >Discussion on observability requirements</h4>
+	For sparse attack on time-invariant attack set, the sufficient and necessary condition is $2p$-sparse observability.
+	<h4 id="" >An illustrative example:</h4>
+	<div style="font-size: 20pt;"> $$A=\begin{bmatrix}2 & 1 & 0\\ 0& 2 & 1\\0&0&2\end{bmatrix},C=\begin{bmatrix}1 &0\\ 1 &0\\ 1 &0\end{bmatrix}$$</div>
+	System is 2-sparse observable, and thus can tolerate 1 corrupted sensor.
+	
+	The minimization problem exists unique solution [1]:
+	<div style="font-size: 25pt;">$$\min_{a(0),a(1),x} \left\|\begin{bmatrix} y(0)-Cx-a(0)\\ 
+		y(1)-CAx-a(1)\\
+		y(2)-CA^2x-a(2)
+		\end{bmatrix}\right\|_0,$$
+		$$\text{such that } {\rm supp}(a(0))={\rm supp}(a(1))={\rm supp}(a(2)) \text{ and }  |{\rm supp}(a(0))|=1 $$
+	</div>
+	<div style="font-size: 14pt;">[1] H. Fawzi, P. Tabuada and S. Diggavi, "Secure Estimation and Control for Cyber-Physical Systems Under Adversarial Attacks," in IEEE Transactions on Automatic Control, vol. 59, no. 6, pp. 1454-1467, June 2014, doi: 10.1109/TAC.2014.2303233.</div>
+</section> -->
+
+
+<!-- <section id="Discussion1" class="center" > 
+	<div class="leftcol" style="margin-left: -10%;margin-right: 4%">
+		<h4 id="" >	time-invariant attack set</h4>
+		<div class="r-stack">
+			<span class="fragment fade-out" data-fragment-index="1">
+				$$\min_{a(0),a(1),a(2),x} \left\|\begin{matrix} y(0)-x-\begin{bmatrix}a(0)\\0\\0\end{bmatrix}\\ 
+		y(1)-CAx-\begin{bmatrix}a(1)\\0\\0\end{bmatrix} \\
+		y(2)-CA^2x-\begin{bmatrix}a(2)\\0\\0\end{bmatrix} 
+		\end{matrix}\right\|_0,$$		
+			</span>
+		
+			<span class="fragment fade-in" data-fragment-index="1"> 
+				<span class="fragment fade-out" data-fragment-index="2">
+					$$\min_{a(0),a(1),a(2),x} \left\|\begin{matrix} y(0)-x-\begin{bmatrix}0\\a(0)\\0\end{bmatrix}\\ 
+		y(1)-CAx-\begin{bmatrix}0\\a(1)\\0\end{bmatrix} \\
+		y(2)-CA^2x-\begin{bmatrix}0\\a(2)\\0\end{bmatrix} 
+		\end{matrix}\right\|_0,$$		
+				</span>
+			</span>
+			<span class="fragment fade-in" data-fragment-index="2"> 
+				
+				$$\min_{a(0),a(1),a(2),x} \left\|\begin{matrix} y(0)-x-\begin{bmatrix}0\\0\\a(0)\end{bmatrix}\\ 
+				y(1)-CAx-\begin{bmatrix}0\\0\\a(1)\end{bmatrix} \\
+				y(2)-CA^2x-\begin{bmatrix}0\\0\\a(2)\end{bmatrix} 
+				\end{matrix}\right\|_0,$$	
+			
+			</span>
+		</div>
+		
+		Since $(A,C)$ is 2p-sparse observable, there exists unique solution.
+	</div>
+</section>
+<section id="Discussion2" class="center" > 
+	<div class="leftcol" style="margin-left: -10%;margin-right: 4%">
+		<h4 id="" >	time-invariant attack set</h4>
+		
+		$$\min_{a(0),a(1),a(2),x} \left\|\begin{matrix} y(0)-x-\begin{bmatrix}a(0)\\0\\0\end{bmatrix}\\ 
+		y(1)-CAx-\begin{bmatrix}a(1)\\0\\0\end{bmatrix} \\
+		y(2)-CA^2x-\begin{bmatrix}a(2)\\0\\0\end{bmatrix} 
+		\end{matrix}\right\|_0,$$		
+			
+		
+		Since $(A,C)$ is 2p-sparse observable, there exists unique solution.
+	</div>
+	<div class="rightcol" style="margin-left: -10%;margin-right: 4%">
+		<h4 id="" >	time-varying attack set</h4>
+		$$\min_{a(0),a(1),a(2),x} \left\|\begin{matrix} y(0)-x-\begin{bmatrix}a(0)\\0\\0\end{bmatrix}\\ 
+		y(1)-CAx-\begin{bmatrix}0\\a(1)\\0\end{bmatrix} \\
+		y(2)-CA^2x-\begin{bmatrix}0\\0\\a(2)\end{bmatrix} 
+		\end{matrix}\right\|_0,$$		
+		Since $(A,C)$ is 2p-sparse observable, there exists unique solution.
+	</div>
+</section> -->
+<!-- <section id="Discussion3" class="center" > 
+	<h4 id="" >Discussion on observability requirements</h4>
+	For sparse attack on time-invariant attack set, the sufficient and necessary condition is $2p$-sparse observability.
+	<h4 id="" >An illustrative example:</h4>
+	<div style="font-size: 20pt;"> $$A=\begin{bmatrix}2 & 1\\ 0 & 1\end{bmatrix},C=\begin{bmatrix}1 &0\\ 1 &0\\ 1 &0\end{bmatrix}$$</div>
+	System is 2-sparse observable, and thus can tolerate 1 corrupted sensor.
+	
+	The minimization problem exists unique solution [1]:
+	<div style="font-size: 25pt;">$$\min_{a(0),a(1),x(0)} \left\|\begin{bmatrix} y(0)-Cx(0)-a(0)\\ 
+		y(1)-CAx(0)-a(1)
+		\end{bmatrix}\right\|_0,$$
+		$$\text{such that } {\rm supp}(a(0))={\rm supp}(a(1)) \text{ and }  |{\rm supp}(a(0))|=1 $$
+	</div>
+	<div style="font-size: 14pt;">[1] H. Fawzi, P. Tabuada and S. Diggavi, "Secure Estimation and Control for Cyber-Physical Systems Under Adversarial Attacks," in IEEE Transactions on Automatic Control, vol. 59, no. 6, pp. 1454-1467, June 2014, doi: 10.1109/TAC.2014.2303233.</div>
+</section> -->
+
+<section>
+	<h4>Simulation on IEEE 14 bus system</h4>
+
+
+	<div class="imgcontainer">
+		<div about="" typeof="dcmitype:StillImage" class="figure">
+			<img src="./figures/IEEE14bus.png" width="600" height="400" style="margin-top:0%; margin-right:0%;">
+		</div>
+	</div>
+
+
+
+	<!-- <h4 style="margin-top: 2%;">Challenge</h4> -->
+	<div class="leftcol" style="margin-left: -2%;margin-right: 1%">
+	<li style="font-size: 30px;">generator bus $\mathcal{V}_g=\{1,2,3,6,8\}$, load bus $\mathcal{V}_l=\{2,3,4,5,6,9,10,11,12,13,14\}$</li>
+	<li style="font-size: 30px;">$14\times 2=28$ states (phase angle, angle velocity)</li>
+	<li style="font-size: 30px;">$14\times 4=56$ measurements (phase angle$\times 2$, angle velocity, electric power)</li>
+    </div>
+	<div class="leftcol">
+	<!-- <div class="rightcol" style="margin-left: -30%"> -->
+	<div style="font-size: 22px;">
+		$$	\dot{\theta}_{i}(t) =\omega_{i}(t), $$
+		$$\dot{\omega}_{i}(t) =-\frac{1}{m_{i}}\left[D_{i} \omega_{i}(t)+\sum_{j \in \mathcal{N}_{i}} P_{t i e}^{i j}(t)- P_{i}(t)+w_{i}(t)\right].$$
+	</div>
+	<div style="font-size: 22px;">
+		$$	\left[\begin{array}{ccc}
+		y_{i_1}(k) & y_{i_2}(k) & y_{i_3}(k)& y_{i_4}(k)
+		\end{array}\right]^\top=\left[\begin{array}{ccc}
+		P_{e l e c, i}(k) & \theta_{i}(k)& \omega_{i}(k) & \omega_{i}(k)
+		\end{array}\right]^{\top}+v_{i}(k), $$
+	</div>
+	<!-- <div class="rightcol"></div> -->
+</div>
+
+
+</section>
+
+<!-- <section style="font-size: 30px;">
+	<h4>Complexity Challenge</h4>
+
+	If at most 4 sensors are compromised among all 204 sensors, all possible combinations are 
+	<div style="font-size: 20px;">$${204 \choose 4}=7.006\times 10^7 $$ </div>
+
+	<li>Maintaining all possible subsets is nearly impossible.</li>
+
+	<div class="imgcontainer">
+		<div about="" typeof="dcmitype:StillImage" class="figure">
+			<img src="./figures/complexity_table.png" width="1200" height="350" style="margin-top:0%; margin-right:0%;">
+		</div>
+	</div>
+
+	<li style="font-size: 25pt;">Our proposed method only maintains an optimization problem with $n=136$ states at each sensor.</li>
+
+	<li style="font-size: 25pt;">By observability transformation, we only maintains an optimization problem with $n=7$ states at each sensor.</li>
+
+</section> -->
+
+<section style="font-size: 40px;">
+	<h4>Attack set design </h4>
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/attack_set.png" width="1200" height="200" style="margin-top:0%; margin-right:0%;">
+	</div>
+	The attack set loops for every 3 time steps.
+	<h4>Random signal attack</h4>
+	$a_i(k)$ is a random value uniformly distributed in interval $[-10,10]$.
+	<h4>Slope signal attack</h4>
+	$a_i(k)=k/5$ i.e., the magnitude of injected data increases 20 for every second. 
+
+</section>
+
+
+<section>
+	<h4>Random signal attack</h4>
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/rand_added_a.png" alt="Figure" style="margin-top:-2%;margin-bottom:-2%; max-height:70vh" />
+			</p>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h4>Estimation performance under random attack signal</h4> 
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/random_attack_result.png" alt="Figure" style="margin-top:-2%; max-height:70vh" />
+			</p>
+		</div>
+	</div>
+	<!-- <div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/random_attack_result.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+	</div> -->
+		
+</section>
+
+<section>
+	<h4>Slope signal attack</h4>
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/slope_added_a.png" alt="Figure" style="margin-top:-2%; max-height:70vh" />
+			</p>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h4>Estimation performance under slope attack signal</h4> 
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/slope_attack_result.png" alt="Figure" style="margin-top:-2%; max-height:70vh" />
+			</p>
+		</div>
+	</div>
+	<!-- <div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/slope_attack_result.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+	</div> -->
+</section>
+
+
+<section id="residue_random">
+	<h4>Residue decrease by resetting</h4> 
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/residue_random.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+		<img src="./figures/residue_legend.png" width="600" height="160" style="margin-top:0%; margin-right:0%;">
+	</div>
+		
+</section>
+
+<section>
+	<h4>Residue decrease by resetting</h4> 
+	<div about="" typeof="dcmitype:StillImage" class="figure">
+		<img src="./figures/residue_slope.png" width="1000" height="1800" style="margin-top:0%; margin-right:0%;">
+		<img src="./figures/residue_legend.png" width="600" height="160" style="margin-top:0%; margin-right:0%;">
+	</div>
+</section>
+
+<section style="font-size: 35px;">
+	<h4>Summary</h4>
+
+	Propose an algorithm for time-varying $p$-sparse attack on sensors.
+	
+	<h5 style="font-size: 40px; margin-top: 1%;">Algorithm structure</h5>
+	<li>Step 1: local observer update</li>
+	<li>Step 2: median fusion</li>
+	<li>Step 3: Detection and reset</li>
+
+	<h5 style="font-size: 40px; margin-top: 1%;">Requirements </h5>
+	<li>Condition on observability (closer to fundamental limit)</li>
+	<li>Non-derogatory dynamic matrix $A$</li>
+	<!-- <li>stable enough local observer: $\sigma_{\max} (A-L_iC)<1/(2\sqrt{n_i}+1)$</li> -->
+
+	<h5 style="font-size: 40px; margin-top: 1%;">Results </h5>
+	<li>secure estimation $\|\hat{x}(k)-x(k)\|_\infty\leq \gamma$.</li>
+	<li>No false alarm.</li>
+
+</section>
+
+<!-- <section id="slide-simu-exp">
+	<h4>Simulation 1: linearized inverted pendulum</h4>
+	<div class="imgcontainer">
+		<div typeof="dcmitype:StillImage" class="figure">
+			<p>
+				<img data-src="figures/invpen.png" alt="Figure" style="margin-top:-2%; max-height:60vh" />
+			</p>
+		</div>
+	</div>
+	<li>Sensor 1,2,3: car position, sensor 4: pendulum angle</li>
+
+	<li>The system is 2-sparse observable and can tolerate at most 1 corrupted sensor.</li>
+
+
+</section> -->
+
+<!-- <section style="font-size: 25px;">
+	<h4>Simulation</h4>
+	$$A=\begin{bmatrix}
+	1  &   2.0\cdot 10^{-2}  &  -2.0\cdot 10^{-4}  &  1.9\cdot 10^{-5}\\
+	0  &   1.0\cdot 10^{0}   & -2.0\cdot 10^{-2}  &   1.8\cdot 10^{-3}\\
+	0  &   1.0\cdot 10^{-5} &   1.0\cdot 10^{0} &   2.0\cdot 10^{-2}\\
+	0  &   1.0\cdot 10^{-3}&  2.1\cdot 10^{-1}  &  9.8\cdot 10^{-1}
+	\end{bmatrix}, C=\begin{bmatrix}1&0&0&0\\ 1&0&0&0\\ 1&0&0&0\\ 0&0&1&0 \end{bmatrix}$$
+	The system dynamic matrix can be written as the following Jordan canonical form by an invertible linear transformation:
+	$$
+	\text{diag}(1.057,1,0.999,0.925),
+	$$
+	and we consider the system after transformation. System matrix $A$ have four Jordan blocks with size $1\times1$ and the upper left two blocks have unstable eigenvalues. Therefore, the set of unstable states and stable states are $\mathcal{U}=\{1,2\},\mathcal{S}=\{3,4\}.$
+	The canonical form of $G_i^\mathcal{U}$ are 
+	\begin{align}
+	H_1^\mathcal{U}=H_2^\mathcal{U}=H_3^\mathcal{U}=\begin{bmatrix}
+	1 & 0 \\
+	0  & 1 \\
+	0  & 0   \\
+	0  & 0 
+	\end{bmatrix},\ H_4^\mathcal{U}=\begin{bmatrix}
+	0 & 0 \\
+	0  & 1 \\
+	0  & 0   \\
+	0  & 0 
+	\end{bmatrix}.
+	\end{align}
+	Only the first 3 sensors can observe unstable state 1, and all the four sensors can observe unstable state 2$.
+	Therefore, the system is 2-sparse detectable and our proposed estimator is secure in the presence of 1 corrupted sensor. 
+</section> -->
+
+<!-- 
+<section>
+	<h4>Resilient Estimation for Model Race-car Drifting Control</h4>
+	<div class="leftcol" style="width: 50%;">
+	<h4 style="margin-top: 0%;">3 Sensors:</h4>
+	<li>IMU</li>
+	<li>ZED Stereo Camera</li>
+	<li>RealSense Depth Camera</li>
+
+	<h4 style="margin-top: 2%;">Goal</h4>
+	On-board sensor State Estimation for aggressive Driving
+
+	<h4 style="margin-top: 2%;">Challenge</h4>
+	<li>IMU: Violent vibration cause inaccurate</li>
+	<li>Stereo Camera: Image distortion</li>
+	<li>Depth Camera: Slow object detection</li>
+
+	</div>
+	<div class="rightcol">
+	<div class="imgcontainer">
+		<div >
+			<p>
+				<img data-src="videos/drifting1.gif" alt="Figure" style="max-height:400vh" />
+			</p>
+		</div>
+	</div>
+	</div>
+</section>
+	
+<section>
+	<h4>Basic set up</h4>
+	<div class="imgcontainer">
+		<div >
+			<p>
+				<img data-src="figures/set_up.png" alt="Figure" style="max-height:600vh" />
+			</p>
+		</div>
+	</div>
+</section>
+
+
+<section>
+	<h4>Sensor property</h4>
+	<div class="imgcontainer">
+		<div >
+			<p>
+				<img data-src="figures/sensors.png" alt="Figure" style="max-height:600vh" />
+			</p>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h4>Sensor property</h4>
+	<div class="imgcontainer">
+		<div >
+			<p>
+				<img data-src="figures/sensors2.png" alt="Figure" style="max-height:600vh" />
+			</p>
+		</div>
+	</div>
+</section>
+<section>
+	<h3>Sensor comparison</h3>
+	<div class="imgcontainer" style="margin-right: 15%;">
+		<div >
+			<p>
+				<img data-src="figures/sensors2.png" alt="Figure" style="max-height:80vh," />
+			</p>
+		</div>
+	</div>
+	<div class="leftcol">
+		<h5>Camera optical flow+IMU estimation:</h5>
+		<li>High frequency (100Hz)</li>
+		<li>No out liers or interrupt</li>
+		<li>Drifting growing error</li>
+	</div>
+	<div class="leftcol">
+		<h5>Camera object detection estimation:</h5>
+		<li>Low frequency (30-60Hz)</li>
+		<li>Out liers and interrupt</li>
+		<li>No drifting growing error</li>
+	</div>
+</section>
+
+<section>
+	<h3>Fusion Result</h3>
+
+	<div class="imgcontainer" >
+		<div >
+			<p>
+				<img data-src="figures/our_fusion.png" alt="Figure"  style="max-height:1800vh" />
+			</p>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h3>Model Racecar drifting </h3>
+	<video data-autoplay src="videos/final_result.mp4" data-video-loop="true"></video>
+
+</section> -->
+
+<!-- <section id="slide-conclusion">
+	<h3>Preliminary works</h3>
+	<li>X. Liu, Y. Mo and E. Garone, <strong>Local Decomposition of Kalman Filters and its Application for Secure State Estimation</strong>, in <i>IEEE Transactions on Automatic Control</i>, vol. 66, no. 10, pp. 5037-5044, Oct. 2021, doi: 10.1109/TAC.2020.3044854.</li>
+	<h3 style="margin-top: 1%;">Published paper</h3>
+	<li>Z. Li, Y. Mo, <strong>Low Complexity Secure State Estimation Design for Linear System with Non-derogatory Dynamics</strong>, <i>2021 IEEE 60th Conference on Decision and Control (CDC)</i>, 2021.</li>
+	<li>
+	Z. Li, Y. Mo, <strong>Efficient Secure State Estimation against Sparse Integrity Attack for Regular Linear System </strong>, in <i>International Journal of Robust and Nonlinear Control</i>, 2022.</li>
+
+	<li>Z. Li, Y. Mo, <strong>Secure Distributed Dynamic State Estimation against Sparse Integrity Attack via Distributed Convex Optimization</strong>, in <i> Transactions on Automatic Control</i>, under review. </li> -->
+	<!-- <h3 style="margin-top: 1%;">Future Work</h3>
+	<li>Asynchronous Non-uniform Sampled Measurements</li> -->
+<!-- </section> -->
+
+<section id="end">
+	<h4>The slides can be seen at</h4>
+
+	https://zs-li.github.io/talk/IFAC2023/index.html
+	<div class="imgcontainer" >
+		<div >
+			<p>
+				<img data-src="figures/QR.png" alt="Figure"  style="max-height:1800vh" />
+			</p>
+		</div>
+	</div>
+
+	<h4 style="margin-top: 3%;">My e-mail is:</h4>
+
+	lizs19@mails.tsinghua.edu.cn
+
+	<div style="margin-top: 15%;">
+<h2>	Questions from the audience!</h2>
+	</div>
+</section>
+
+
+<!-- <section id="slide-outdoor-network" class="center">
+	<h4>EXPERIMENT: NETWORK TRAFFIC</h4>
+	<div style="width: 85%;text-align: center;">
+	<canvas data-chart="bar"> -->
+		<!--{
+			"data" : {
+			"datasets" : [{ "backgroundColor": "#981E32" }, { "backgroundColor": "#0582CA" } ]
+			},
+			"options": {
+				"title":{
+					"text": "Mean network traffic v.s. time",
+					"display": true
+				},
+				"scales":{
+					"yAxes": [{
+						"scaleLabel":{
+							"display": true,
+							"fontColor": "black",
+							"fontSize": 30,
+							"labelString": "Mean network traffic/KiB per second"
+						}
+					}],
+					"xAxes": [{
+						"scaleLabel":{
+							"display": true,
+							"fontColor": "black",
+							"fontSize": 30,
+							"labelString": "Time/min"
+						}
+					}]
+				}
+			}
+
+		}-->
+		<!-- ,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+		Sensor with 3 neighbors in DSE algorithm, 0.07483333, 0.0795, 0.07466667, 0.07783333, 0.07516667, 0.07616667, 0.07633333, 0.0785, 0.09, 0.08233333, 0.07583333, 0.077, 0.07583333, 0.07716667, 0.0735
+		Center of CKF, 0.82, 1.38, 1.66, 1.38, 1.29, 1.12, 1.38, 0.98, 0.9, 1.18, 1.1, 1.38, 0.84, 1.15, 1.07
+	</canvas>
+	</div>
+	<div class="r-stack" style="margin-bottom: 9%;">
+		<p style="font-size:35px;">In this sensor network with <strong><em style="color:var(--myred);">15 sensors</em></strong>, the means traffic of our DSE algorithm is nearly <strong><em style="color:var(--myred);">$\frac{1}{10}$</em></strong> of that of the center in CKF.</p>
+	</div>
+</section>
+
+<section id="slide-indoor-placement" data-background-image="./figures/raw/simulation/real_room.jpg">
+	<h4 id="experiment">EXPERIMENT: INDOOR TEMPERATURE MONITORING</h4>
+</section>
+
+<section id="slide-indoor-placement2" data-background-image="./figures/raw/simulation/indoor_pic.png" data-background-size="900px">
+	<h4 id="experiment">EXPERIMENT: INDOOR TEMPERATURE MONITORING</h4>
+	<span class="r-stack" style="margin-top: 43%;margin-left: -6%;">
+		<ul style="font-size:35px;">
+			<li>We discretize the heat transfer process into <strong><em style="color:var(--myred);">$n=25$ states</em></strong>.</li>
+			<li><strong><em style="color:var(--myred);">$m=12$</em></strong> sensors are deployed. </li>
+		</ul>
+	</span>
+</section>
+
+<section id="slide-indoor-gif" class="center" data-background-image="./figures/raw/simulation/indoor_animation.gif" data-background-size="contain">
+</section> -->
+
+<!--Conclusion-->
+<!-- <section id="slide-conclusion" class="center">
+	<h2 id="h2_conclusion" hidden>Conclusion</h2>
+	<h3 id="h3_conclusion" hidden>Conclusion</h3>
+	<h4 id="conclusion">CONCLUSION</h4>
+	<div class="outline-text-2" id="text-conclusion"></div>
+
+	<ul>
+		<li>Based on a <strong><em style="color:var(--myred);">lossless decomposition</em></strong> of steady-state Kalman filter, we decouple the <strong><em style="color:var(--myred);">local filter</em></strong> from the <strong><em style="color:var(--myred);">synchronization process</em></strong>.</li>
+		<li>We bridge the gap between the problem of <strong><em style="color:var(--myred);">linear system synchronization</em></strong> and <strong><em style="color:var(--myred);">DSE</em></strong>. All of the <strong><em style="color:var(--myred);">strong synchronization algorithms</em></strong> can be applied in our framework.</li>
+		<li>By performing model reduction, the <strong><em style="color:var(--myred);">message complexity</em></strong> can be reduced to <strong><em style="color:var(--myred);">$O(\min(m, n))$</em></strong>.</li>
+		<li>The <strong><em style="color:var(--myred);">performance</em></strong> of our algorithm is <strong><em style="color:var(--myred);">analyzed</em></strong> and <strong><em style="color:var(--myred);">validated</em></strong> with simulation and experiments.</li>
+	</ul>
+	<div class="slide-footer"><br></div>
+</section>
+
+<section id="slide-thanks" class="center">
+	<div style="font-size:100px;text-align:center;">
+		<strong>Thanks!</strong>
+	</div>
+</section>
+
+<section id="slide-bibliography">
+	<h3 id="h3_bibliography" hidden>Bibliography</h3>
+	<h4 id="bibliography">Bibliography</h4>
+	<ul class='org-ref-bib'>
+		<li><a id="Mao2012">[Mao2012]</a> <a name="Mao2012"></a>X. Mao, X. Miao, Y. He, X. Li and Y. Liu, "CitySee: Urban CO2 monitoring with sensors," 2012 Proceedings IEEE INFOCOM, 2012, pp. 1611-1619.</li>
+		<li><a id="Jia2020">[Jia2020]</a> <a name="Jia2020"></a>Q. Jia, J. Tang, J. Wu, X. Hu, Y. Lin, and H. Xia. "Reinforcement learning for green and reliable data center," Chinese Journal of Intelligent Science and Technology, 2020, 2(4): 341-347.</li>
+		<li><a id="Shehabi2016">[Shehabi2016]</a> <a name="Shehabi2016"></a>A. Shehabi, S. Smith, D Sartor and R. Brown. "United States Data Center Energy Usage Report," 2016.</li>
+
+		<li><a id="Olfati-Saber2009">[Olfati-Saber2009]</a> <a name="Olfati-Saber2009"></a>R. Olfati-Saber, "Kalman-Consensus Filter : Optimality, stability, and performance," Proceedings of the 48h IEEE Conference on Decision and Control (CDC) held jointly with 2009 28th Chinese Control Conference, 2009, pp. 7036-7042.</li>
+		<li><a id="Li2018">[Li2018]</a> <a name="Li2018"></a>W. Li, G. Wei, D. W. C. Ho and D. Ding, "A Weightedly Uniform Detectability for Sensor Networks," in IEEE Transactions on Neural Networks and Learning Systems, vol. 29, no. 11, pp. 5790-5796, Nov. 2018.</li>
+		<li><a id="Battistelli2014">[Battistelli2014]</a> <a name="Battistelli2014"></a>G. Battistelli and L. Chisci, “Kullback–Leibler average, consensus on probability densities, and distributed state estimation with guaranteed stability,” Automatica, vol. 50, no. 3, pp. 707–718, 2014.</li>
+
+		<li><a id="He2020">[He2020]</a> <a name="He2020"></a>S. He, H. Shin, S. Xu and A. Tsourdos, "Distributed estimation over a low-cost sensor network: A Review of state-of-the-art," in Information Fusion, vol. 54, pp. 21-43, 2020.</li>
+
+
+		<li><a id="Gu2012">[Gu2012]</a> <a name="Gu2012"></a>G. Gu, L. Marinovici and F. L. Lewis, "Consensusability of Discrete-Time Dynamic Multiagent Systems," in IEEE Transactions on Automatic Control, vol. 57, no. 8, pp. 2085-2089, Aug. 2012.</li>
+		<li><a id="Xu2020">[Xu2020]</a> <a name="Xu2020"></a>L. Xu, Y. Mo and L. Xie, "Distributed Consensus Over Markovian Packet Loss Channels," in IEEE Transactions on Automatic Control, vol. 65, no. 1, pp. 279-286, Jan. 2020.</li>
+		<li><a id="Liu2016">[Liu2016]</a> <a name="Liu2016"></a>X. Liu, J. Lam, W. Yu and G. Chen, "Finite-Time Consensus of Multiagent Systems With a Switching Protocol," in IEEE Transactions on Neural Networks and Learning Systems, vol. 27, no. 4, pp. 853-862, April 2016.</li>
+
+		<li><a id="You2011">[You2011]</a> <a name="You2011"></a>K. You and L. Xie, "Network Topology and Communication Data Rate for Consensusability of Discrete-Time Multi-Agent Systems," in IEEE Transactions on Automatic Control, vol. 56, no. 10, pp. 2262-2275, Oct. 2011.</li>
+		<li><a id="Zhang2021">[Zhang2021]</a> <a name="Zhang2021"></a>J. -L. Zhang, X. Chen and G. Gu, "State Consensus for Discrete-Time Multiagent Systems Over Time-Varying Graphs," in IEEE Transactions on Automatic Control, vol. 66, no. 1, pp. 346-353, Jan. 2021.</li>
+
+	</ul>
+	<div class="slide-footer"><br></div>
+</section>
+
+<section id="slide-backup">
+	<h4>EXPERIMENT: NETWORK TRAFFIC</h4>
+	<div style="width: 85%;text-align: center;">
+	<canvas data-chart="bar"> -->
+		<!--{
+			"data" : {
+			"datasets" : [{ "backgroundColor": "#981E32" }, { "backgroundColor": "#0582CA" } ]
+			},
+			"options": {
+				"title":{
+					"text": "Mean network traffic v.s. time",
+					"display": true
+				},
+				"scales":{
+					"yAxes": [{
+						"scaleLabel":{
+							"display": true,
+							"fontColor": "black",
+							"fontSize": 30,
+							"labelString": "Mean network traffic/KiB per second"
+						}
+					}],
+					"xAxes": [{
+						"scaleLabel":{
+							"display": true,
+							"fontColor": "black",
+							"fontSize": 30,
+							"labelString": "Time/min"
+						}
+					}]
+				}
+			}
+
+		}-->
+		<!-- ,0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+		Sensor with 3 neighbors in DSE algorithm, 0.69, 0.07483333, 0.0795, 0.07466667, 0.07783333, 0.07516667, 0.07616667, 0.07633333, 0.0785, 0.09, 0.08233333, 0.07583333, 0.077, 0.07583333, 0.07716667, 0.0735
+		Center of CKF, 1.32, 0.82, 1.38, 1.66, 1.38, 1.29, 1.12, 1.38, 0.98, 0.9, 1.18, 1.1, 1.38, 0.84, 1.15, 1.07
+	</canvas>
+	</div>
+	<div class="r-stack" style="margin-bottom: 9%;">
+		<p style="font-size:35px;">Let each sensor <strong><em style="color:var(--myred);">broadcast its $C_i$</em></strong> at the beginning so that each sensor can have access to <strong><em style="color:var(--myred);">global information</em></strong> which it needs.</p>
+	</div>
+</section>
+</section> -->
+
+
+
+<style type="text/css"> div.flushright{text-align:right;} </style>
+<script src="./reveal.js/plugin/chart/Chart.min.js"></script>
+<script src="./reveal.js/plugin/chart/plugin.js"></script>
+<script src="./reveal.js/plugin/mine/chartjs-plugin-colorschemes.js"></script>
+<script src="./reveal.js/plugin/mine/bokeh-2.2.2.min.js"></script>
+<script src="./reveal.js/plugin/mine/bokeh-widgets-2.2.2.min.js"></script>
+<script src="./reveal.js/plugin/mine/bokeh-tables-2.2.2.min.js"></script>
+<script type="text/javascript" sync src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js"></script>
+
+<script>
+	Reveal.initialize({ plugins: [ RevealMath.MathJax2 ] });
+</script>
+
+<script src="./reveal.js/dist/reveal.js"></script>
+<script src="./reveal.js/plugin/notes/notes.js"></script>
+<script src="./reveal.js/plugin/search/search.js"></script>
+<script src="./reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+
+Reveal.initialize({
+controls: true,
+progress: true,
+history: true,
+center: false,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: true,
+fragmentInURL: true,
+hashOneBasedIndex: false,
+pdfSeparateFragments: false,
+
+overview: true,
+
+transition: 'fade',
+transitionSpeed: 'default',
+margin: 0.01,
+  width: 1080,
+	height: 540,
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+{src:'./reveal.js/plugin/spotlight/spotlight.js'},
+{src: './reveal.js/plugin/math/math.js', async:true},
+{src: './reveal.js/plugin/math/math-gc.js'}, 
+{src: './reveal.js/plugin/toc-progress/toc-progress.js', async: true, callback: function() { toc_progress.initialize('reduce', 'rgba(120,138,130,0.2)', 'body'); }}
+],
+
+chart: {
+  defaults: {
+	  	global:{
+			defaultFontSize: 20,
+			title:{
+				display: true,
+				fontColor: "black",
+				fontSize: 40
+			},
+			scales: {
+				scaleLabel: { fontColor: "black"},
+				gridLines: { color: "#FFF", zeroLineColor: "#FFF" }
+			} ,
+			legend:{
+					display: true,
+					labels: {fontColor: "black", fontSize: 30 }
+			}
+		}
+	}
+},
+
+plugins: [RevealNotes, RevealSearch, RevealZoom, RevealChart], spotlight: {toggleSpotlightOnMouseDown: false}, keyboard: {84: function() { RevealSpotlight.toggleSpotlight() }}, width: 1366, height: 768, margin: 0.1,
+audioStartAtFragment: true,
+  audio: {
+    advance: -1, autoplay: false, defaultDuration: 0, defaultAudios: false, playerOpacity: 0.8, playerStyle: 'position: fixed; bottom: 9.5vh; left: 0%; width: 30%; height:30px; z-index: 33;' },
+anything: [
+        // Following initialization code for class animate from anything-demo.html.
+        // Copyright (c) 2016 Asvin Goel, under The MIT License (MIT).
+	{className: "animate",  initialize: (function(container, options){
+		Reveal.addEventListener( 'fragmentshown', function( event ) {
+			if (typeof event.fragment.beginElement === "function" ) {
+				event.fragment.beginElement();
+			}
+		});
+		Reveal.addEventListener( 'fragmenthidden', function( event ) {
+			if (event.fragment.hasAttribute('data-reverse') ) {
+				var reverse = event.fragment.parentElement.querySelector('[id=\"' + event.fragment.getAttribute('data-reverse') + '\"]');
+				if ( reverse && typeof reverse.beginElement === "function" ) {
+					reverse.beginElement();
+				}
+			}
+		});
+		if ( container.getAttribute("data-svg-src") ) {
+			var xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				if (xhr.readyState === 4) {
+					var svg = container.querySelector('svg');
+					container.removeChild( svg );
+					container.innerHTML = xhr.responseText + container.innerHTML;
+					if ( svg ) {
+						container.querySelector('svg').innerHTML = container.querySelector('svg').innerHTML + svg.innerHTML;
+					}
+				}
+				else {
+					console.warn( "Failed to get file. ReadyState: " + xhr.readyState + ", Status: " + xhr.status);
+				}
+			};
+			xhr.open( 'GET', container.getAttribute("data-svg-src"), true );
+			xhr.send();
+		}
+	}) },
+	{className: "randomPic",
+	 defaults: {imgalt: "Dummy alt text",
+		    imgcaption: "Image by {name}",
+		    choices: [ {name: "dummyname", path: "dummypath"} ]},
+	 initialize: (function(container, options){
+	     var choice = Math.trunc( Math.random()*(options.choices.length) );
+	     var img = "<img src='" + options.choices[choice].path + "' alt='" + options.choices[choice].imgalt + "' />";
+	     var caption = options.imgcaption.replace(new RegExp('\{name\}', 'gm'), options.choices[choice].name);
+	     container.innerHTML = img + caption;
+	 }) },
+	{className: "notes",
+	 initialize: (function(container, options){
+	     container.addEventListener('click', function(e) { Reveal.getPlugins().notes.open(); });
+	 }) }
+],
+coursemod: { enabled: true, shown: false },
+});
+</script>
+
+<script>
+Reveal.configure({
+  keyboard: {
+    39: 'next', // go to the next slide when the ENTER key is pressed
+    37: 'prev' // don't do anything when SPACE is pressed (i.e. disable a reveal.js default binding)
+  }
+})
+</script>
+</body>
+</html>
