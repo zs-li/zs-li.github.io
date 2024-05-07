@@ -9,7 +9,7 @@ title: ! 'Binary Hypothesis Testing with Byzantine Sensors: Fundamental Trade-of
 --------------------------------
 *Xiaoqiang Ren, Jiaqi Yan and Yilin Mo*
 
-/IEEE Transactions on Signal Processing/, Avaiable Online, DOI: 10.1109/TSP.2017.2788420
+/IEEE Transactions on Signal Processing/, Available Online, DOI: 10.1109/TSP.2017.2788420
 
 Link to the [[../../../public/papers/tsp17.pdf][paper]]
 
